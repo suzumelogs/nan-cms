@@ -52,4 +52,10 @@ export const menus: MenuType[] = [
     icon: ViewStreamIcon,
     active_icon: ViewStreamIcon,
   },
+  {
+    href: '/discounts',
+    title: 'Khuyến mãi',
+    icon: ViewStreamIcon,
+    active_icon: ViewStreamIcon,
+  },
 ]
