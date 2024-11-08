@@ -12,11 +12,9 @@ const UserInfoSchema = z.object({
 })
 
 export const SigninOutputSchema = z.object({
-  data: z.object({
-    accessToken: z.string(),
-    refreshToken: z.string(),
-    user: UserInfoSchema,
-  }),
+  token: z.string(),
+  refreshToken: z.string(),
+  user: UserInfoSchema,
 })
 
 export const UserResponseSchema = z.object({

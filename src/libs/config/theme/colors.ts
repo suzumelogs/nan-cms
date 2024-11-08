@@ -1,6 +1,6 @@
 const base = {
-  primary: '#08826D',
-  primary_pale: '#D1F4EB',
+  primary: '#03396c',
+  primary_pale: '#b3cde0',
   primary_red: '#bd191c',
   black: '#000000',
   white: '#FFFFFF',

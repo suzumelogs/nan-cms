@@ -3,7 +3,7 @@ import request from '../config/axios'
 
 export const signin = async ({ email, password }: SigninInputType) => {
   try {
-    const res = await request.post<SigninOutputType>('/auth/signin', {
+    const res = await request.post<SigninOutputType>('/auth/login', {
       email,
       password,
     })
