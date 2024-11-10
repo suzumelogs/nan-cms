@@ -11,13 +11,13 @@ import {
 import React, { CSSProperties } from 'react'
 
 export type ActionConfig<T extends RowData> = {
-  onDetail?: (_id: string | number, row: Row<T>) => void
+  onDetail?: (id: string | number, row: Row<T>) => void
   disabledDetail?: boolean
   detailIcon?: React.ReactNode
   renderLeft?: (row: Row<T>) => React.ReactNode
   renderRight?: (row: Row<T>) => React.ReactNode
   meta?: ColumnMeta<T, unknown>
-  onSetTop?: (_id: string | number, row: Row<T>) => void
+  onSetTop?: (id: string | number, row: Row<T>) => void
   setTopIcon?: React.ReactNode
 }
 

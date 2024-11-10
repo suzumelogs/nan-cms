@@ -6,7 +6,7 @@ export const SigninInputSchema = z.object({
 })
 
 const UserInfoSchema = z.object({
-  _id: z.string(),
+  id: z.string(),
   name: z.string(),
   email: z.string(),
 })
@@ -19,7 +19,7 @@ export const SigninOutputSchema = z.object({
 
 export const UserResponseSchema = z.object({
   data: z.object({
-    _id: z.number(),
+    id: z.number(),
     name: z.string(),
     email: z.string(),
     created_at: z.string(),

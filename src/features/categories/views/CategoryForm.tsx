@@ -1,9 +1,9 @@
 'use client'
 
 import { DetailItem } from '@/features/article/components'
-import { FormLayout, Input, UploadImage } from '@/libs/components/Form'
+import { FormLayout, Input, InputMoney } from '@/libs/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Stack, Typography } from '@mui/material'
+import { Stack } from '@mui/material'
 import { useParams, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect } from 'react'
@@ -25,15 +25,22 @@ const CategoryForm = () => {
   } = useForm<CategoryCreateInputType>({
     defaultValues: {
       name: '',
-      url: undefined,
+      description: '',
+      priceDay: '',
+      priceWeek: '',
+      priceMonth: '',
     },
     resolver: zodResolver(CategoryCreateInputSchema),
   })
 
   useEffect(() => {
     if (categoryDetail) {
-      const { name } = categoryDetail
+      const { name, description, priceDay, priceWeek, priceMonth } = categoryDetail
       setValue('name', name as string)
+      setValue('description', description as string)
+      setValue('priceDay', priceDay as string)
+      setValue('priceWeek', priceWeek as string)
+      setValue('priceMonth', priceMonth as string)
     }
   }, [setValue, categoryDetail])
 
@@ -41,15 +48,12 @@ const CategoryForm = () => {
   const { mutate: updateCategory, isPending: isPendingUpdate } = useCategoryUpdate(setError)
 
   const onSubmit: SubmitHandler<CategoryCreateInputType> = (data) => {
-    const submitData = { ...data, _id: categoriesId as string }
+    const submitData = { ...data, id: categoriesId as string }
 
     const successCallback = () => {
-      enqueueSnackbar(
-        categoriesId ? 'Cập nhật danh mục thành công' : 'Thêm mới danh mục thành công',
-        {
-          variant: 'success',
-        },
-      )
+      enqueueSnackbar(categoriesId ? 'Cập nhật gói thành công' : 'Thêm mới gói thành công', {
+        variant: 'success',
+      })
       router.push(categoriesId ? `/categories/${categoriesId}/detail` : '/categories')
     }
 
@@ -67,43 +71,69 @@ const CategoryForm = () => {
       isDirty={isDirty}
       submitLoading={isPendingCreate || isPendingUpdate}
     >
-      <Stack direction="row">
+      <Stack direction="row" spacing={2}>
         <Stack spacing={2} width={{ xs: '100%', lg: '50%' }}>
           <Stack direction={{ xs: 'column', lg: 'row' }} gap={4} alignItems={{ lg: 'center' }}>
             <DetailItem
               label="ID"
-              value={categoryDetail?._id || '-'}
+              value={categoryDetail?.id || '-'}
               valueSx={{ width: { xs: '100%', lg: 500 } }}
             />
           </Stack>
 
-          <Stack direction={{ xs: 'column', lg: 'row' }} gap={4}>
+          <Stack direction="column" gap={2}>
             <Input
               control={control}
               name="name"
-              label="Tên danh mục"
+              label="Tên gói"
               labelLeft
-              placeholder="Tên sách"
+              placeholder="Tên gói"
               fullWidth
             />
-          </Stack>
-
-          <Stack direction="row" gap={1}>
-            <Stack
-              minWidth={120}
-              padding="4px 8px"
-              bgcolor="base.white"
-              justifyContent="center"
-              sx={{ height: 44 }}
-            >
-              <Typography variant="body2" color="grey.500">
-                Hình ảnh
-              </Typography>
-            </Stack>
-            <UploadImage
-              name="url"
+            <Input
               control={control}
-              content="Kéo và thả file hình ảnh vào đây hoặc nhấp để chọn"
+              name="description"
+              label="Mô tả"
+              labelLeft
+              placeholder="Mô tả"
+              fullWidth
+            />
+            <InputMoney
+              control={control}
+              name="priceDay"
+              label="Giá theo ngày"
+              labelLeft
+              placeholder="Nhập giá theo ngày"
+              type="text"
+              fullWidth
+            />
+            <InputMoney
+              control={control}
+              name="priceWeek"
+              label="Giá theo tuần"
+              labelLeft
+              placeholder="Nhập giá theo tuần"
+              type="text"
+              fullWidth
+            />
+            <InputMoney
+              control={control}
+              name="priceMonth"
+              label="Giá theo tháng"
+              labelLeft
+              placeholder="Nhập giá theo tháng"
+              type="text"
+              fullWidth
+            />
+            <DetailItem
+              label="Ngày tạo"
+              value={categoryDetail?.createdAt || '-'}
+              valueSx={{ width: { xs: '100%', lg: 200 } }}
+            />
+            <DetailItem
+              label="Ngày cập nhật"
+              value={categoryDetail?.updatedAt || '-'}
+              valueSx={{ width: { xs: '100%', lg: 200 } }}
             />
           </Stack>
         </Stack>

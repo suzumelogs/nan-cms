@@ -8,18 +8,10 @@ import {
 } from '@/features/categories'
 import request from '../config/axios'
 
-const formData = (data: CategoryCreateInputType | CategoryUpdateInputType | any): FormData => {
-  const formData = new FormData()
-  if ('name' in data) formData.append('name', data.name as string)
-  if ('url' in data && data.url) formData.append('url', data.url)
-  if ('file' in data && data.file) formData.append('file', data.file)
-  return formData
-}
-
 export const getListCategories = async (params: CategoryListQueryInputType) => {
   const { page, limit, filter } = params
   try {
-    const response = await request.get<CategoryListType>('/categories', {
+    const response = await request.get<CategoryListType>('/categories/pagination', {
       params: {
         page,
         limit,
@@ -32,9 +24,9 @@ export const getListCategories = async (params: CategoryListQueryInputType) => {
   }
 }
 
-export const getCategory = async (_id: string) => {
+export const getCategory = async (id: string) => {
   try {
-    const response = await request.get<CategoryDetailResponseType>(`/categories/${_id}`)
+    const response = await request.get<CategoryDetailResponseType>(`/categories/${id}`)
     return response.data.data
   } catch (error) {
     throw error
@@ -42,8 +34,15 @@ export const getCategory = async (_id: string) => {
 }
 
 export const createCategory = async (data: CategoryCreateInputType) => {
+  const categoryData = {
+    ...data,
+    priceDay: Number(data.priceDay),
+    priceMonth: Number(data.priceMonth),
+    priceWeek: Number(data.priceWeek),
+  }
+
   try {
-    const response = await request.post('/categories', data)
+    const response = await request.post('/categories', categoryData)
     return response.data
   } catch (error) {
     throw error
@@ -52,8 +51,20 @@ export const createCategory = async (data: CategoryCreateInputType) => {
 
 export const updateCategory = async (data: CategoryUpdateInputType) => {
   try {
-    const { _id, ...dataRequest } = data
-    const response = await request.patch(`/categories/${_id}`, dataRequest)
+    const { id, ...dataRequest } = data
+
+    console.log(data)
+
+    const updatedData = {
+      ...dataRequest,
+      priceDay: dataRequest.priceDay ? Number(dataRequest.priceDay) : 0,
+      priceMonth: dataRequest.priceMonth ? Number(dataRequest.priceMonth) : 0,
+      priceWeek: dataRequest.priceWeek ? Number(dataRequest.priceWeek) : 0,
+    }
+
+    console.log(updatedData)
+
+    const response = await request.patch(`/categories/${id}`, updatedData)
     return response.data
   } catch (error) {
     throw error

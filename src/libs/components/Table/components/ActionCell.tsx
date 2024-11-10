@@ -14,7 +14,7 @@ function ActionCell<T extends RowData, TValue = unknown>({
   const meta = table.options.meta
   const pathname = usePathname()
   const actionConfig = meta?.action as ActionConfig<T>
-  const _id = (row.original as { _id: never })._id
+  const id = (row.original as { id: never }).id
 
   const detailConfig = actionConfig.onDetail
   const hasDetailConfig = detailConfig && typeof detailConfig === 'function'
@@ -22,9 +22,9 @@ function ActionCell<T extends RowData, TValue = unknown>({
 
   const onDetail = () => {
     if (hasDetailConfig) {
-      detailConfig(_id as string, row)
+      detailConfig(id as string, row)
     } else {
-      router.push(`${pathname}/${_id}/detail`)
+      router.push(`${pathname}/${id}/detail`)
     }
   }
 

@@ -1,8 +1,6 @@
 'use client'
 
 import { ReactTable } from '@/libs/components/Table'
-import { generateMediaUrl } from '@/utils/media'
-import { Stack } from '@mui/material'
 import { ColumnDef } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 import { useCategoryListQuery } from '../hooks'
@@ -12,29 +10,34 @@ const CategoryList = () => {
   const { tableData, totalPages } = useCategoryListQuery()
   const router = useRouter()
 
+  const formatCurrency = (value?: number) =>
+    value !== undefined
+      ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value)
+      : ''
+
   const commonCellStyle = {
     fontSize: 14,
     lineHeight: '20px',
     fontWeight: 400,
-    padding: '0 16px',
+    padding: '8px 16px',
   }
 
   const columns: ColumnDef<CategoryType>[] = [
     {
-      header: 'ID',
+      header: 'STT',
       accessorFn: (row, index) => index + 1,
       meta: {
-        width: 56,
+        width: 60,
         headStyle: {
-          padding: '0 24px',
+          padding: '0 16px',
         },
         cellStyle: {
-          width: 56,
+          width: 60,
           textAlign: 'center',
           fontSize: 14,
           lineHeight: '20px',
           fontWeight: 400,
-          padding: '0 8px',
+          padding: '8px',
         },
       },
     },
@@ -47,38 +50,65 @@ const CategoryList = () => {
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 250,
+          width: 200,
+          fontWeight: 500,
         },
       },
     },
     {
-      header: 'Hình ảnh',
-      accessorKey: 'imageUrl',
+      header: 'Mô tả',
+      accessorKey: 'description',
       meta: {
         headStyle: {
-          padding: '0 8px',
+          padding: '0 16px',
         },
         cellStyle: {
-          padding: '0 8px',
-          textAlign: 'center',
-          width: 100,
+          ...commonCellStyle,
+          width: 300,
         },
       },
-      cell: ({ row }) => (
-        <Stack flexDirection="row" alignItems="center" columnGap={1}>
-          <Stack
-            width="40px"
-            height="40px"
-            component="img"
-            borderRadius="2px"
-            src={
-              row.original?.url
-                ? generateMediaUrl(row.original?.url, 'image')
-                : 'https://demofree.sirv.com/nope-not-here.jpg'
-            }
-          />
-        </Stack>
-      ),
+    },
+    {
+      header: 'Giá theo ngày',
+      accessorKey: 'priceDay',
+      cell: ({ row }) => formatCurrency(row.original.priceDay),
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+          width: 150,
+        },
+      },
+    },
+    {
+      header: 'Giá theo tuần',
+      accessorKey: 'priceWeek',
+      cell: ({ row }) => formatCurrency(row.original.priceWeek),
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+          width: 150,
+        },
+      },
+    },
+    {
+      header: 'Giá theo tháng',
+      accessorKey: 'priceMonth',
+      cell: ({ row }) => formatCurrency(row.original.priceMonth),
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+          width: 150,
+        },
+      },
     },
   ]
 
@@ -89,8 +119,8 @@ const CategoryList = () => {
       next={totalPages}
       action={{
         disabledDetail: false,
-        onDetail: (_id) => {
-          router.push(`/categories/${_id}/detail`)
+        onDetail: (id) => {
+          router.push(`/categories/${id}/detail`)
         },
       }}
     />

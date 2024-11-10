@@ -18,6 +18,6 @@ export const useCategoryListQuery = () => {
 
   return {
     tableData: getTableData(data),
-    totalPages: data.data?.pagination?.totalPages || 0,
+    totalPages: data.data?.total || 0,
   }
 }

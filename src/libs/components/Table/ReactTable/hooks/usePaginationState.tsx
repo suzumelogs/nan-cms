@@ -21,8 +21,8 @@ export function usePaginationState<T extends RowData>(props: PaginationProps = {
             onPaginationChange,
             getRowId(originalRow: T, _index: number, parent: Row<T> | undefined) {
               return parent
-                ? [parent.id, (originalRow as { _id: string | number })._id.toString()].join('.')
-                : (originalRow as { _id: string | number })._id.toString()
+                ? [parent.id, (originalRow as { id: string | number }).id.toString()].join('.')
+                : (originalRow as { id: string | number }).id.toString()
             },
           }
         : {
