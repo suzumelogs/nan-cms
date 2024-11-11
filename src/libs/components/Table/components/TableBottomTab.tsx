@@ -40,6 +40,10 @@ export const defaultActionApi = {
     delete: () => {},
     title: '',
   },
+  devices: {
+    delete: () => {},
+    title: '',
+  },
 }
 
 export type ActionPath = keyof typeof defaultActionApi
