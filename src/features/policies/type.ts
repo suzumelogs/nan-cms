@@ -1,0 +1,63 @@
+import { PaginationType } from '@/libs/types/pagination'
+import { TypeOf, z } from 'zod'
+
+export type PolicyType = {
+  id?: string
+  description?: string
+  depositRate?: number
+  damageProcessingFee?: number
+  createdAt?: string
+  updatedAt?: string
+}
+
+export type PolicyDetailType = {
+  id?: string
+  description?: string
+  depositRate?: number
+  damageProcessingFee?: number
+  createdAt?: string
+  updatedAt?: string
+}
+
+export type PolicyListType = {
+  data: PolicyType[]
+} & PaginationType
+
+export type PolicySearchInputType = PaginationType & {
+  filter?: string
+  page?: string
+  next?: string
+}
+
+export type PolicyListQueryInputType = PolicySearchInputType & {
+  column?: string
+  sortBy?: 'asc' | 'desc'
+}
+
+export type PolicyDetailResponseType = {
+  data: PolicyDetailType
+}
+
+export type QueryInputPolicyDetailType = {
+  policyId: string
+  sortBy?: string
+  column?: string
+}
+
+export const PolicyCreateInputSchema = z.object({
+  description: z
+    .string()
+    .min(1, { message: 'Mô tả là bắt buộc' })
+    .max(500, { message: 'Mô tả không được dài quá 500 ký tự' }),
+  depositRate: z.number().min(0, { message: 'Tỷ lệ đặt cọc phải là số dương' }),
+  damageProcessingFee: z.number().min(0, { message: 'Phí xử lý hỏng hóc phải là số dương' }),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
+})
+
+export const PolicyUpdateInputSchema = PolicyCreateInputSchema.extend({
+  id: z.string().min(1, { message: 'ID là bắt buộc' }),
+})
+
+export type PolicyCreateInputType = TypeOf<typeof PolicyCreateInputSchema>
+export type PolicyUpdateInputType = TypeOf<typeof PolicyUpdateInputSchema>
