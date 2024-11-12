@@ -42,7 +42,7 @@ const CategoryList = () => {
       },
     },
     {
-      header: 'Tên danh mục',
+      header: 'Tên gói',
       accessorKey: 'name',
       meta: {
         headStyle: {
@@ -64,7 +64,7 @@ const CategoryList = () => {
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 300,
+          width: 250,
         },
       },
     },

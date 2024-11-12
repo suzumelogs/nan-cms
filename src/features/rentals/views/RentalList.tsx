@@ -109,7 +109,7 @@ const RentalList = () => {
       accessorKey: 'status',
       meta: {
         headStyle: {
-          padding: '0 16px',
+          // padding: '0 16px',
         },
         cellStyle: {
           ...commonCellStyle,

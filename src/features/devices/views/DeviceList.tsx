@@ -64,7 +64,7 @@ const DeviceList = () => {
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 300,
+          width: 200,
         },
       },
     },
@@ -81,7 +81,7 @@ const DeviceList = () => {
         cellStyle: {
           ...commonCellStyle,
           width: 150,
-          textAlign: 'center',
+          textAlign: 'left',
         },
       },
     },
@@ -133,12 +133,12 @@ const DeviceList = () => {
       cell: ({ row }) => row.original.status,
       meta: {
         headStyle: {
-          padding: '0 16px',
+          // padding: '0 16px',
         },
         cellStyle: {
           ...commonCellStyle,
           width: 120,
-          textAlign: 'center',
+          textAlign: 'right',
         },
       },
     },
