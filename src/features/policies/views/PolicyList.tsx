@@ -62,7 +62,6 @@ const PolicyList = () => {
         cellStyle: {
           ...commonCellStyle,
           width: 150,
-          textAlign: 'right',
         },
       },
     },
@@ -77,7 +76,6 @@ const PolicyList = () => {
         cellStyle: {
           ...commonCellStyle,
           width: 180,
-          textAlign: 'right',
         },
       },
     },
