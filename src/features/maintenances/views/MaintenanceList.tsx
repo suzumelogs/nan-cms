@@ -77,11 +77,9 @@ const MaintenanceList = () => {
         width: 120,
         headStyle: { padding: '0 16px' },
         cellStyle: {
-          textAlign: 'center',
           fontSize: 14,
           lineHeight: '20px',
           fontWeight: 400,
-          padding: '8px',
         },
       },
       cell: ({ row }) => {
