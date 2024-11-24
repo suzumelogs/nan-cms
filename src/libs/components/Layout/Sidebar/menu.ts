@@ -37,7 +37,7 @@ export const menus: MenuType[] = [
     active_icon: CategoryIcon,
   },
   {
-    href: '/devices',
+    href: '/equipments',
     title: 'Thiết bị',
     icon: DevicesIcon,
     active_icon: DevicesIcon,

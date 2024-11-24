@@ -40,7 +40,7 @@ export const defaultActionApi = {
     delete: () => {},
     title: '',
   },
-  devices: {
+  equipments: {
     delete: () => {},
     title: '',
   },
