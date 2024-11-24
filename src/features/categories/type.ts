@@ -5,9 +5,7 @@ export type CategoryType = {
   id: string
   name: string
   description?: string
-  priceDay?: number
-  priceWeek?: number
-  priceMonth?: number
+  equipments?: string[]
   createdAt?: string
   updatedAt?: string
 }
@@ -16,9 +14,7 @@ export type CategoryDetailType = {
   id?: string
   name?: string
   description?: string
-  priceDay?: string
-  priceWeek?: string
-  priceMonth?: string
+  equipments?: string[]
   createdAt?: string
   updatedAt?: string
 }
@@ -51,26 +47,16 @@ export type QueryInputCategoryDetailType = {
 export const CategoryCreateInputSchema = z.object({
   name: z
     .string()
-    .min(1, { message: 'Tên gói là bắt buộc' })
-    .max(100, { message: 'Tên gói không được dài quá 100 ký tự' }),
-  description: z
-    .string()
-    .min(1, { message: 'Mô tả là bắt buộc' })
-    .max(500, { message: 'Mô tả không được dài quá 500 ký tự' }),
-  priceDay: z.string().min(0, { message: 'Giá theo ngày là bắt buộc' }).optional().or(z.number()),
-  priceWeek: z.string().min(0, { message: 'Giá theo tuần là bắt buộc' }).optional().or(z.number()),
-  priceMonth: z
-    .string()
-    .min(0, { message: 'Giá theo tháng là bắt buộc' })
-    .optional()
-    .or(z.number()),
-  createdAt: z.string().optional(),
-  updatedAt: z.string().optional(),
+    .min(1, { message: 'Tên danh mục là bắt buộc' })
+    .max(100, { message: 'Tên danh mục không được dài quá 100 ký tự' }),
+  description: z.string().max(1000, { message: 'Mô tả không được dài quá 1000 ký tự' }).optional(),
+  equipments: z.array(z.string()).optional(),
 })
 
 export const CategoryUpdateInputSchema = CategoryCreateInputSchema.extend({
-  id: z.string().min(1, { message: 'ID gói là bắt buộc' }),
+  id: z.string().min(1, { message: 'ID danh mục là bắt buộc' }),
 })
 
 export type CategoryCreateInputType = TypeOf<typeof CategoryCreateInputSchema>
+
 export type CategoryUpdateInputType = TypeOf<typeof CategoryUpdateInputSchema>

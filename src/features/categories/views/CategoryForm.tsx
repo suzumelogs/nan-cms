@@ -1,7 +1,7 @@
 'use client'
 
 import { DetailItem } from '@/features/article/components'
-import { FormLayout, Input, InputMoney } from '@/libs/components/Form'
+import { FormLayout, Input } from '@/libs/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Stack } from '@mui/material'
 import { useParams, useRouter } from 'next/navigation'
@@ -26,21 +26,15 @@ const CategoryForm = () => {
     defaultValues: {
       name: '',
       description: '',
-      priceDay: '',
-      priceWeek: '',
-      priceMonth: '',
     },
     resolver: zodResolver(CategoryCreateInputSchema),
   })
 
   useEffect(() => {
     if (categoryDetail) {
-      const { name, description, priceDay, priceWeek, priceMonth } = categoryDetail
+      const { name, description } = categoryDetail
       setValue('name', name as string)
       setValue('description', description as string)
-      setValue('priceDay', priceDay as string)
-      setValue('priceWeek', priceWeek as string)
-      setValue('priceMonth', priceMonth as string)
     }
   }, [setValue, categoryDetail])
 
@@ -51,7 +45,7 @@ const CategoryForm = () => {
     const submitData = { ...data, id: categoriesId as string }
 
     const successCallback = () => {
-      enqueueSnackbar(categoriesId ? 'Cập nhật gói thành công' : 'Thêm mới gói thành công', {
+      enqueueSnackbar(categoriesId ? 'Cập nhật thành công' : 'Thêm mới thành công', {
         variant: 'success',
       })
       router.push(categoriesId ? `/categories/${categoriesId}/detail` : '/categories')
@@ -96,33 +90,6 @@ const CategoryForm = () => {
               label="Mô tả"
               labelLeft
               placeholder="Mô tả"
-              fullWidth
-            />
-            <InputMoney
-              control={control}
-              name="priceDay"
-              label="Giá theo ngày"
-              labelLeft
-              placeholder="Nhập giá theo ngày"
-              type="text"
-              fullWidth
-            />
-            <InputMoney
-              control={control}
-              name="priceWeek"
-              label="Giá theo tuần"
-              labelLeft
-              placeholder="Nhập giá theo tuần"
-              type="text"
-              fullWidth
-            />
-            <InputMoney
-              control={control}
-              name="priceMonth"
-              label="Giá theo tháng"
-              labelLeft
-              placeholder="Nhập giá theo tháng"
-              type="text"
               fullWidth
             />
             <DetailItem

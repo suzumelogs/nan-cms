@@ -1,93 +1,92 @@
 import { PaginationType } from '@/libs/types/pagination'
-import { TypeOf, string, z } from 'zod'
+import { TypeOf, z } from 'zod'
 
-export type INCOME_OPTIONS_TYPE = {
-  value: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-  label: string
+export enum Role {
+  User = 'user',
+  Admin = 'admin',
+  SuperAdmin = 'super_admin',
 }
 
 export type UserType = {
-  id: number
-  name?: string
+  id: string
+  name: string
   email: string
-  role?: string | number
-  is_active?: string | number
-  profile_photo_url?: string
-  created_at?: string
+  emailVerified?: string
+  role: Role
+  identityDoc?: string
+  rentals?: string[]
+  feedbacks?: string[]
+  cart?: string
+  notifications?: string[]
+  paymentMethods?: string[]
+  supports?: string[]
+  createdAt?: string
+  updatedAt?: string
+}
+
+export type UserDetailType = {
+  id?: string
+  name?: string
+  email?: string
+  emailVerified?: string
+  role?: Role
+  identityDoc?: string
+  rentals?: string[]
+  feedbacks?: string[]
+  cart?: string
+  notifications?: string[]
+  paymentMethods?: string[]
+  supports?: string[]
+  createdAt?: string
+  updatedAt?: string
 }
 
 export type UserListType = {
   data: UserType[]
 } & PaginationType
 
-export type UserSearchInputType = {
-  search?: string
-  is_active?: string | number
-  role?: string | number
+export type UserSearchInputType = PaginationType & {
+  filter?: string
   page?: string
-  limit?: string
-} & PaginationType
-
-export type UserListQueryInputType = {
-  column?: string
-  sort_by?: 'asc' | 'desc'
-} & UserSearchInputType
-export type BookMarkType = {
-  id: string
-  name: string
-  address: string
-  builded_year: string
-  occupation_area: number
-  amount: number
-  yield: number
+  next?: string
 }
 
-export type UserDetailType = {
-  id: string
-  name: string
-  email: string
-  role?: string
-  is_active?: string | number
-  created_at: string
-  updated_at?: string
+export type UserListQueryInputType = UserSearchInputType & {
+  column?: string
+  sortBy?: 'asc' | 'desc'
 }
 
 export type UserDetailResponseType = {
   data: UserDetailType
 }
 
-export type DeleteUserParam = {
-  userId: string
-}
-
 export type QueryInputUserDetailType = {
-  userId: string
-  sort_by?: string
+  userId?: string
+  sortBy?: string
   column?: string
 }
 
-export const UserInputSchema = z.object({
-  name: z.string().optional(),
-  email: z.string().optional(),
-  role: z.string().optional(),
-  is_active: z.string().optional(),
-  created_at: z.string().optional(),
-})
-
 export const UserCreateInputSchema = z.object({
-  name: z.string().optional(),
-  email: z.string().optional(),
-  role: z.string().optional(),
-  is_active: z.string().optional(),
-  created_at: z.string().optional(),
-  updated_at: z.string().optional(),
+  name: z
+    .string()
+    .min(1, { message: 'Tên người dùng là bắt buộc' })
+    .max(100, { message: 'Tên người dùng không được dài quá 100 ký tự' }),
+  email: z.string().email({ message: 'Địa chỉ email không hợp lệ' }),
+  password: z.string().min(6, { message: 'Mật khẩu phải có ít nhất 6 ký tự' }),
+  role: z.nativeEnum(Role).optional(),
+  identityDoc: z.string().optional(),
+  rentals: z.array(z.string()).optional(),
+  feedbacks: z.array(z.string()).optional(),
+  cart: z.string().optional(),
+  notifications: z.array(z.string()).optional(),
+  paymentMethods: z.array(z.string()).optional(),
+  supports: z.array(z.string()).optional(),
 })
 
-export const UserUpdateInputSchema = z
-  .object({
-    id: string(),
-  })
-  .merge(UserCreateInputSchema)
+export const UserUpdateInputSchema = UserCreateInputSchema.extend({
+  id: z.string().min(1, { message: 'ID người dùng là bắt buộc' }),
+})
 
 export type UserCreateInputType = TypeOf<typeof UserCreateInputSchema>
+
 export type UserUpdateInputType = TypeOf<typeof UserUpdateInputSchema>

@@ -7,9 +7,16 @@ import {
 import request from '../config/axios'
 import { clearObjRequest } from '../hooks'
 
-export const getListUser = async (params: UserListQueryInputType) => {
+export const getListUsers = async (params: UserListQueryInputType) => {
+  const { page, limit, filter } = params
   try {
-    const response = await request.get<UserListType>('/user', { params })
+    const response = await request.get<UserListType>('/users/all/pagination', {
+      params: {
+        page,
+        limit,
+        filter,
+      },
+    })
     return response.data
   } catch (error) {
     throw error
@@ -27,7 +34,7 @@ export const getUser = async (id: string) => {
 
 export const updateUser = async (data: UserUpdateInputType) => {
   try {
-    const { id, name, email, is_active, created_at, ...dataRequest } = data
+    const { id, name, email, ...dataRequest } = data
     const cleanedRequest = clearObjRequest({
       ...dataRequest,
     })
@@ -41,11 +48,10 @@ export const updateUser = async (data: UserUpdateInputType) => {
   }
 }
 
-export const getUserDetail = async ({ column, sort_by, userId }: QueryInputUserDetailType) => {
+export const getUserDetail = async ({ column, userId }: QueryInputUserDetailType) => {
   try {
     const response = await request.get<UserDetailResponseType>(`/user/${userId}`, {
       params: {
-        sort_by,
         column,
       },
     })

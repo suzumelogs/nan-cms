@@ -32,7 +32,7 @@ export const menus: MenuType[] = [
   },
   {
     href: '/categories',
-    title: 'Gói thiết bị',
+    title: 'Danh mục',
     icon: CategoryIcon,
     active_icon: CategoryIcon,
   },

@@ -11,7 +11,7 @@ import request from '../config/axios'
 export const getListCategories = async (params: CategoryListQueryInputType) => {
   const { page, limit, filter } = params
   try {
-    const response = await request.get<CategoryListType>('/categories/pagination', {
+    const response = await request.get<CategoryListType>('/categories/all/pagination', {
       params: {
         page,
         limit,
@@ -26,7 +26,7 @@ export const getListCategories = async (params: CategoryListQueryInputType) => {
 
 export const getCategory = async (id: string) => {
   try {
-    const response = await request.get<CategoryDetailResponseType>(`/categories/${id}`)
+    const response = await request.get<CategoryDetailResponseType>(`/categories/get-by/${id}`)
     return response.data.data
   } catch (error) {
     throw error
@@ -36,13 +36,10 @@ export const getCategory = async (id: string) => {
 export const createCategory = async (data: CategoryCreateInputType) => {
   const categoryData = {
     ...data,
-    priceDay: Number(data.priceDay),
-    priceMonth: Number(data.priceMonth),
-    priceWeek: Number(data.priceWeek),
   }
 
   try {
-    const response = await request.post('/categories', categoryData)
+    const response = await request.post('/categories/create', categoryData)
     return response.data
   } catch (error) {
     throw error
@@ -57,14 +54,9 @@ export const updateCategory = async (data: CategoryUpdateInputType) => {
 
     const updatedData = {
       ...dataRequest,
-      priceDay: dataRequest.priceDay ? Number(dataRequest.priceDay) : 0,
-      priceMonth: dataRequest.priceMonth ? Number(dataRequest.priceMonth) : 0,
-      priceWeek: dataRequest.priceWeek ? Number(dataRequest.priceWeek) : 0,
     }
 
-    console.log(updatedData)
-
-    const response = await request.patch(`/categories/${id}`, updatedData)
+    const response = await request.patch(`/categories/update/${id}`, updatedData)
     return response.data
   } catch (error) {
     throw error
@@ -73,11 +65,14 @@ export const updateCategory = async (data: CategoryUpdateInputType) => {
 
 export const getCategoryDetail = async ({ column, categoryId }: QueryInputCategoryDetailType) => {
   try {
-    const response = await request.get<CategoryDetailResponseType>(`/categories/${categoryId}`, {
-      params: {
-        column,
+    const response = await request.get<CategoryDetailResponseType>(
+      `/categories/get-by/${categoryId}`,
+      {
+        params: {
+          column,
+        },
       },
-    })
+    )
     return response.data.data
   } catch (error) {
     throw error
@@ -86,7 +81,7 @@ export const getCategoryDetail = async ({ column, categoryId }: QueryInputCatego
 
 export const deleteCategory = async (categoryId: string) => {
   try {
-    const response = await request.delete(`/categories/${categoryId}`)
+    const response = await request.delete(`/categories/remove/${categoryId}`)
     return response.data
   } catch (error) {
     throw error

@@ -10,11 +10,6 @@ const CategoryList = () => {
   const { tableData, totalPages } = useCategoryListQuery()
   const router = useRouter()
 
-  const formatCurrency = (value?: number) =>
-    value !== undefined
-      ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value)
-      : ''
-
   const commonCellStyle = {
     fontSize: 14,
     lineHeight: '20px',
@@ -42,7 +37,7 @@ const CategoryList = () => {
       },
     },
     {
-      header: 'Tên gói',
+      header: 'Tên danh mục',
       accessorKey: 'name',
       meta: {
         headStyle: {
@@ -64,49 +59,7 @@ const CategoryList = () => {
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 250,
-        },
-      },
-    },
-    {
-      header: 'Giá theo ngày',
-      accessorKey: 'priceDay',
-      cell: ({ row }) => formatCurrency(row.original.priceDay),
-      meta: {
-        headStyle: {
-          padding: '0 16px',
-        },
-        cellStyle: {
-          ...commonCellStyle,
-          width: 150,
-        },
-      },
-    },
-    {
-      header: 'Giá theo tuần',
-      accessorKey: 'priceWeek',
-      cell: ({ row }) => formatCurrency(row.original.priceWeek),
-      meta: {
-        headStyle: {
-          padding: '0 16px',
-        },
-        cellStyle: {
-          ...commonCellStyle,
-          width: 150,
-        },
-      },
-    },
-    {
-      header: 'Giá theo tháng',
-      accessorKey: 'priceMonth',
-      cell: ({ row }) => formatCurrency(row.original.priceMonth),
-      meta: {
-        headStyle: {
-          padding: '0 16px',
-        },
-        cellStyle: {
-          ...commonCellStyle,
-          width: 150,
+          width: 500,
         },
       },
     },

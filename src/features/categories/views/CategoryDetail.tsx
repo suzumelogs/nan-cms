@@ -22,7 +22,7 @@ const CategoryDetail = () => {
   const handleDeleteCartegory = () => {
     deleteCategory(categoriesId as string, {
       onSuccess: () => {
-        enqueueSnackbar('Xoá gói thành công', { variant: 'success' })
+        enqueueSnackbar('Xoá thành công', { variant: 'success' })
         router.push('/categories')
       },
     })
@@ -30,21 +30,15 @@ const CategoryDetail = () => {
 
   const { data, isLoading } = useCategoryDetailQuery(categoriesId as string)
 
-  const formatCurrency = (value?: number | string) =>
-    value !== undefined
-      ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-          value as number,
-        )
-      : ''
-
   return (
     <Stack spacing={4}>
-      <Header title="Chi tiết gói" editPath="edit" deleteFunction={handleOpenModal} />
+      <Header title="Chi tiết" editPath="edit" deleteFunction={handleOpenModal} />
 
       <Box>
         <Stack spacing={2}>
           <DetailItem label="ID" value={data?.id} isPending={isLoading} />
-          <DetailItem label="Tên gói" value={data?.name} isPending={isLoading} />
+          <DetailItem label="Tên danh mục" value={data?.name} isPending={isLoading} />
+          <DetailItem label="Mô tả" value={data?.description} isPending={isLoading} />
           <DetailItem
             label="Ngày tạo"
             value={formatDate(data?.createdAt as string)}
@@ -55,21 +49,6 @@ const CategoryDetail = () => {
             value={formatDate(data?.updatedAt as string)}
             isPending={isLoading}
           />
-          <DetailItem
-            label="Giá theo ngày"
-            value={formatCurrency(data?.priceDay)}
-            isPending={isLoading}
-          />
-          <DetailItem
-            label="Giá theo tuần"
-            value={formatCurrency(data?.priceWeek)}
-            isPending={isLoading}
-          />
-          <DetailItem
-            label="Giá theo tháng"
-            value={formatCurrency(data?.priceMonth)}
-            isPending={isLoading}
-          />
         </Stack>
       </Box>
 
@@ -78,8 +57,8 @@ const CategoryDetail = () => {
         open={open}
         handleSubmit={handleDeleteCartegory}
         textSubmit="Đồng ý"
-        description="Bạn có thực sự muốn xóa gói này?"
-        title="Xóa gói"
+        description="Bạn có thực sự muốn xóa danh mục này?"
+        title="Xóa danh mục"
       />
     </Stack>
   )
