@@ -44,6 +44,10 @@ export const defaultActionApi = {
     delete: () => {},
     title: '',
   },
+  package: {
+    delete: () => {},
+    title: '',
+  },
   rentals: {
     delete: () => {},
     title: '',

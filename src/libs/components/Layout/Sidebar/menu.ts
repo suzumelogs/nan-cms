@@ -43,11 +43,12 @@ export const menus: MenuType[] = [
     active_icon: DevicesIcon,
   },
   {
-    href: '/rentals',
-    title: 'Thuê',
-    icon: EventAvailableIcon,
-    active_icon: EventAvailableIcon,
+    href: '/package',
+    title: 'Gói thiết bị',
+    icon: DevicesIcon,
+    active_icon: DevicesIcon,
   },
+
   {
     href: '/policies',
     title: 'Chính sách',
@@ -65,5 +66,11 @@ export const menus: MenuType[] = [
     title: 'Mã giảm giá',
     icon: AttachMoneyIcon,
     active_icon: AttachMoneyIcon,
+  },
+  {
+    href: '/rentals',
+    title: 'Đơn thuê',
+    icon: EventAvailableIcon,
+    active_icon: EventAvailableIcon,
   },
 ]
