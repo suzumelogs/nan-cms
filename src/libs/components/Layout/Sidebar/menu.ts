@@ -3,6 +3,7 @@ import BuildIcon from '@mui/icons-material/Build'
 import CategoryIcon from '@mui/icons-material/Category'
 import DevicesIcon from '@mui/icons-material/Devices'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
+import InventoryIcon from '@mui/icons-material/Inventory'
 import UserIcon from '@mui/icons-material/Person'
 import PolicyIcon from '@mui/icons-material/Policy'
 import StackedLineChartIcon from '@mui/icons-material/StackedLineChart'
@@ -37,18 +38,17 @@ export const menus: MenuType[] = [
     active_icon: CategoryIcon,
   },
   {
+    href: '/package',
+    title: 'Gói thiết bị',
+    icon: InventoryIcon,
+    active_icon: InventoryIcon,
+  },
+  {
     href: '/equipments',
     title: 'Thiết bị',
     icon: DevicesIcon,
     active_icon: DevicesIcon,
   },
-  {
-    href: '/package',
-    title: 'Gói thiết bị',
-    icon: DevicesIcon,
-    active_icon: DevicesIcon,
-  },
-
   {
     href: '/policies',
     title: 'Chính sách',

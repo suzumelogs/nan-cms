@@ -120,7 +120,7 @@ const EquipmentPackageList = () => {
       action={{
         disabledDetail: false,
         onDetail: (id) => {
-          router.push(`/equipments/${id}/detail`)
+          router.push(`/package/${id}/detail`)
         },
       }}
     />
