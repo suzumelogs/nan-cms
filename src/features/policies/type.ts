@@ -28,6 +28,12 @@ export type PolicyDetailResponseType = {
   data: PolicyDetailType
 }
 
+export type QueryInputPolicyDetailType = {
+  policyId?: string
+  sortBy?: string
+  column?: string
+}
+
 export const PolicyCreateInputSchema = z.object({
   description: z
     .string()
