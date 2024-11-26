@@ -3,7 +3,7 @@ import { useTableContext } from '@/libs/components/Table'
 import { useQuery } from '@tanstack/react-query'
 import { MaintenanceSearchInputType, MaintenanceType } from '../type'
 
-export const useMaintenancesListQuery = () => {
+export const useMaintenanceListQuery = () => {
   const { input, getTableData, sortOptions } = useTableContext<
     MaintenanceType,
     MaintenanceSearchInputType

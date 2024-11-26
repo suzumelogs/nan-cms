@@ -3,11 +3,11 @@
 import { ReactTable } from '@/libs/components/Table'
 import { ColumnDef } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
-import { useMaintenancesListQuery } from '../hooks'
+import { useMaintenanceListQuery } from '../hooks/useMaintenanceListQuery'
 import { MaintenanceType } from '../type'
 
 const MaintenanceList = () => {
-  const { tableData, totalPages } = useMaintenancesListQuery()
+  const { tableData, totalPages } = useMaintenanceListQuery()
   const router = useRouter()
 
   const formatCurrency = (value?: number) =>
