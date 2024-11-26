@@ -26,11 +26,7 @@ const EquipmentPackageFilter = () => {
         Danh sách
       </Typography>
 
-      <FilterBar
-        columns={filterColumn}
-        createPath="categories/create"
-        buttonSearchUnderButtonCreate
-      />
+      <FilterBar columns={filterColumn} createPath="package/create" buttonSearchUnderButtonCreate />
     </Stack>
   )
 }

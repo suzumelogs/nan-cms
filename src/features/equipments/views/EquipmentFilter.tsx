@@ -28,7 +28,7 @@ const EquipmentFilter = () => {
 
       <FilterBar
         columns={filterColumn}
-        createPath="categories/create"
+        createPath="equipments/create"
         buttonSearchUnderButtonCreate
       />
     </Stack>
