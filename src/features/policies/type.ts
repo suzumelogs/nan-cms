@@ -10,7 +10,14 @@ export type PolicyType = {
   updatedAt?: string
 }
 
-export type PolicyDetailType = PolicyType
+export type PolicyDetailType = {
+  id?: string
+  description?: string
+  depositRate?: number
+  damageProcessingFee?: number
+  createdAt?: string
+  updatedAt?: string
+}
 
 export type PolicyListType = {
   data: PolicyType[]
@@ -18,9 +25,12 @@ export type PolicyListType = {
 
 export type PolicySearchInputType = PaginationType & {
   filter?: string
+  page?: string
+  next?: string
 }
 
 export type PolicyListQueryInputType = PolicySearchInputType & {
+  column?: string
   sortBy?: 'asc' | 'desc'
 }
 
@@ -42,7 +52,7 @@ export const PolicyCreateInputSchema = z.object({
   depositRate: z
     .number()
     .min(0, { message: 'Tỷ lệ đặt cọc phải lớn hơn hoặc bằng 0' })
-    .max(1, { message: 'Tỷ lệ đặt cọc không được lớn hơn 1' }),
+    .max(100, { message: 'Tỷ lệ đặt cọc không thể lớn hơn 100' }),
   damageProcessingFee: z
     .number()
     .min(0, { message: 'Phí xử lý hỏng hóc phải lớn hơn hoặc bằng 0' }),
@@ -53,4 +63,5 @@ export const PolicyUpdateInputSchema = PolicyCreateInputSchema.extend({
 })
 
 export type PolicyCreateInputType = TypeOf<typeof PolicyCreateInputSchema>
+
 export type PolicyUpdateInputType = TypeOf<typeof PolicyUpdateInputSchema>

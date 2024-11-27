@@ -37,7 +37,7 @@ const MaintenanceDetail = () => {
 
   return (
     <Stack spacing={4}>
-      <Header title="Chi tiết bảo trì" editPath="edit" deleteFunction={handleOpenModal} />
+      <Header title="Chi tiết" editPath="edit" deleteFunction={handleOpenModal} />
 
       <Box>
         <Stack spacing={2}>

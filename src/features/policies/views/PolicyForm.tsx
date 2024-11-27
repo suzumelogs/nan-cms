@@ -8,13 +8,13 @@ import { useParams, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { usePolicyCreate, usePolicyDetailQuery, usePolicyUpdate } from '../hooks'
+import { usePolicyCreate, usePolicyDetail, usePolicyUpdate } from '../hooks'
 import { PolicyCreateInputSchema, PolicyCreateInputType } from '../type'
 
 const PolicyForm = () => {
   const router = useRouter()
-  const { policiesId } = useParams()
-  const { data: policyDetail } = usePolicyDetailQuery(policiesId as string)
+  const { policiesId } = useParams()  
+  const { data: policyDetail } = usePolicyDetail(policiesId as string)  
 
   const {
     control,
@@ -34,9 +34,9 @@ const PolicyForm = () => {
   useEffect(() => {
     if (policyDetail) {
       const { description, depositRate, damageProcessingFee } = policyDetail
-      setValue('description', description)
-      setValue('depositRate', depositRate)
-      setValue('damageProcessingFee', damageProcessingFee)
+      setValue('description', description as string)
+      setValue('depositRate', depositRate as number)
+      setValue('damageProcessingFee', damageProcessingFee as number)
     }
   }, [setValue, policyDetail])
 
@@ -76,6 +76,7 @@ const PolicyForm = () => {
               valueSx={{ width: { xs: '100%', lg: 500 } }}
             />
           </Stack>
+
           <Stack direction="column" gap={2}>
             <Input
               control={control}
@@ -92,16 +93,14 @@ const PolicyForm = () => {
               labelLeft
               placeholder="Tỷ lệ đặt cọc"
               fullWidth
-              type="number"
             />
             <Input
               control={control}
               name="damageProcessingFee"
               label="Phí xử lý hỏng hóc"
               labelLeft
-              placeholder="Phí hỏng hóc"
+              placeholder="Phí xử lý hỏng hóc"
               fullWidth
-              type="number"
             />
             <DetailItem
               label="Ngày tạo"
