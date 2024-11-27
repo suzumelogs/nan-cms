@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { useDeleteMaintenance, useMaintenanceDetailQuery } from '../hooks'
 
 const MaintenanceDetail = () => {
-  const { maintenanceId } = useParams()
+  const { maintenancesId } = useParams()
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const { deleteMaintenance } = useDeleteMaintenance()
@@ -20,7 +20,7 @@ const MaintenanceDetail = () => {
   const handleCloseModal = () => setOpen(false)
 
   const handleDeleteMaintenance = () => {
-    deleteMaintenance(maintenanceId as string, {
+    deleteMaintenance(maintenancesId as string, {
       onSuccess: () => {
         enqueueSnackbar('Xoá thành công', { variant: 'success' })
         router.push('/maintenances')
@@ -28,7 +28,12 @@ const MaintenanceDetail = () => {
     })
   }
 
-  const { data, isLoading } = useMaintenanceDetailQuery(maintenanceId as string)
+  const { data, isLoading } = useMaintenanceDetailQuery(maintenancesId as string)
+
+  const formatCurrency = (value?: number) =>
+    value !== undefined
+      ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value)
+      : ''
 
   return (
     <Stack spacing={4}>
@@ -45,7 +50,7 @@ const MaintenanceDetail = () => {
           <DetailItem label="Mô tả" value={data?.description} isPending={isLoading} />
           <DetailItem
             label="Chi phí bảo trì"
-            value={data?.maintenanceCost ? `${data.maintenanceCost} VND` : 'N/A'}
+            value={formatCurrency(data?.maintenanceCost)}
             isPending={isLoading}
           />
           <DetailItem

@@ -51,12 +51,30 @@ export type QueryInputMaintenanceDetailType = {
 }
 
 export const MaintenanceCreateInputSchema = z.object({
-  maintenanceDate: z.string().min(1, { message: 'Ngày bảo trì là bắt buộc' }),
-  description: z.string().max(1000, { message: 'Mô tả không được dài quá 1000 ký tự' }).optional(),
-  suggestedNextMaintenance: z.string().optional(),
+  maintenanceDate: z.preprocess(
+    (value) => (value instanceof Date ? value.toISOString() : value),
+    z.string().nonempty({ message: 'Ngày bảo trì là bắt buộc' }),
+  ),
+  description: z
+    .string()
+    .min(10, { message: 'Mô tả phải có ít nhất 10 ký tự' })
+    .max(1000, { message: 'Mô tả không được dài quá 1000 ký tự' })
+    .optional(),
+  suggestedNextMaintenance: z
+    .string()
+    .optional()
+    .refine((val) => (val ? !isNaN(Date.parse(val)) : true), {
+      message: 'Ngày đề xuất bảo trì tiếp theo phải là định dạng ngày hợp lệ',
+    }),
   status: z.enum(['pending', 'completed']).default('pending'),
-  maintenanceCost: z.number().positive({ message: 'Chi phí bảo trì phải là số dương' }).optional(),
-  equipmentId: z.string().min(1, { message: 'ID thiết bị là bắt buộc' }),
+  maintenanceCost: z
+    .union([z.string(), z.number()])
+    .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
+    .refine((val) => Number.isInteger(val) && val > 0, {
+      message: 'Chi phí bảo trì',
+    })
+    .optional(),
+  equipmentId: z.string().nonempty({ message: 'ID thiết bị là bắt buộc' }),
 })
 
 export const MaintenanceUpdateInputSchema = MaintenanceCreateInputSchema.extend({

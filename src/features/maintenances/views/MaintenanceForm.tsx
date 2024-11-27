@@ -1,6 +1,7 @@
 'use client'
 
 import { DetailItem } from '@/features/article/components'
+import { DatePicker } from '@/libs/components/DatePicker'
 import { FormLayout, Input } from '@/libs/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Stack } from '@mui/material'
@@ -13,8 +14,8 @@ import { MaintenanceCreateInputSchema, MaintenanceCreateInputType } from '../typ
 
 const MaintenanceForm = () => {
   const router = useRouter()
-  const { maintenanceId } = useParams()
-  const { data: maintenanceDetail } = useMaintenanceDetail(maintenanceId as string)
+  const { maintenancesId } = useParams()
+  const { data: maintenanceDetail } = useMaintenanceDetail(maintenancesId as string)
 
   const {
     control,
@@ -27,16 +28,18 @@ const MaintenanceForm = () => {
       maintenanceDate: '',
       description: '',
       maintenanceCost: 0,
+      equipmentId: ''
     },
     resolver: zodResolver(MaintenanceCreateInputSchema),
   })
 
   useEffect(() => {
     if (maintenanceDetail) {
-      const { maintenanceDate, description, maintenanceCost } = maintenanceDetail
+      const { maintenanceDate, description, maintenanceCost, equipmentId } = maintenanceDetail
       setValue('maintenanceDate', maintenanceDate as string)
       setValue('description', description as string)
       setValue('maintenanceCost', maintenanceCost as number)
+      setValue('equipmentId', equipmentId as string)
     }
   }, [setValue, maintenanceDetail])
 
@@ -44,16 +47,16 @@ const MaintenanceForm = () => {
   const { mutate: updateMaintenance, isPending: isPendingUpdate } = useMaintenanceUpdate(setError)
 
   const onSubmit: SubmitHandler<MaintenanceCreateInputType> = (data) => {
-    const submitData = { ...data, id: maintenanceId as string }
+    const submitData = { ...data, id: maintenancesId as string }
 
     const successCallback = () => {
-      enqueueSnackbar(maintenanceId ? 'Cập nhật thành công' : 'Thêm mới thành công', {
+      enqueueSnackbar(maintenancesId ? 'Cập nhật thành công' : 'Thêm mới thành công', {
         variant: 'success',
       })
-      router.push(maintenanceId ? `/maintenances/${maintenanceId}/detail` : '/maintenances')
+      router.push(maintenancesId ? `/maintenances/${maintenancesId}/detail` : '/maintenances')
     }
 
-    if (maintenanceId) {
+    if (maintenancesId) {
       updateMaintenance(submitData, { onSuccess: successCallback })
     } else {
       createMaintenance(data, { onSuccess: successCallback })
@@ -63,7 +66,7 @@ const MaintenanceForm = () => {
   return (
     <FormLayout
       onSubmit={handleSubmit(onSubmit)}
-      title={maintenanceId ? 'Cập nhật bảo trì' : 'Tạo mới bảo trì'}
+      title={maintenancesId ? 'Cập nhật' : 'Tạo mới'}
       isDirty={isDirty}
       submitLoading={isPendingCreate || isPendingUpdate}
     >
@@ -78,15 +81,12 @@ const MaintenanceForm = () => {
           </Stack>
 
           <Stack direction="column" gap={2}>
-            <Input
-              control={control}
+            <DatePicker  control={control}
               name="maintenanceDate"
               label="Ngày bảo trì"
               labelLeft
-              placeholder="Chọn ngày bảo trì"
-              type="date"
-              fullWidth
-            />
+              placeholder="Ngày bảo trì"
+              fullWidth/>
             <Input
               control={control}
               name="description"
@@ -102,6 +102,14 @@ const MaintenanceForm = () => {
               labelLeft
               placeholder="Nhập chi phí bảo trì"
               type="number"
+              fullWidth
+            />
+            <Input
+              control={control}
+              name="equipmentId"
+              label="Thiết bị"
+              labelLeft
+              placeholder="Thiết bị"
               fullWidth
             />
             <DetailItem

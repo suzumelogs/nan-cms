@@ -1,6 +1,7 @@
 'use client'
 
 import { ReactTable } from '@/libs/components/Table'
+import { formatDate } from '@/utils/format'
 import { ColumnDef } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 import { useMaintenanceListQuery } from '../hooks/useMaintenanceListQuery'
@@ -48,12 +49,11 @@ const MaintenanceList = () => {
         width: 150,
         headStyle: { padding: '0 16px' },
         cellStyle: {
-          textAlign: 'center',
-          fontSize: 14,
-          lineHeight: '20px',
-          fontWeight: 400,
-          padding: '8px',
+          ...commonCellStyle, 
         },
+      },
+      cell: ({ row }) => {
+        return <span>{formatDate(row.original.maintenanceDate)}</span>
       },
     },
     {
@@ -63,10 +63,7 @@ const MaintenanceList = () => {
         width: 250,
         headStyle: { padding: '0 16px' },
         cellStyle: {
-          fontSize: 14,
-          lineHeight: '20px',
-          fontWeight: 400,
-          padding: '8px 16px',
+          ...commonCellStyle, 
         },
       },
     },
@@ -75,11 +72,8 @@ const MaintenanceList = () => {
       accessorKey: 'status',
       meta: {
         width: 120,
-        headStyle: { padding: '0 16px' },
         cellStyle: {
-          fontSize: 14,
-          lineHeight: '20px',
-          fontWeight: 400,
+          ...commonCellStyle, 
         },
       },
       cell: ({ row }) => {
@@ -93,31 +87,14 @@ const MaintenanceList = () => {
         width: 150,
         headStyle: { padding: '0 16px' },
         cellStyle: {
-          fontSize: 14,
-          lineHeight: '20px',
-          fontWeight: 400,
-          padding: '8px',
+          ...commonCellStyle, 
         },
       },
       cell: ({ row }) => {
         return <span>{formatCurrency(row.getValue('maintenanceCost'))}</span>
       },
     },
-    {
-      header: 'ID thiết bị',
-      accessorKey: 'deviceId',
-      meta: {
-        width: 120,
-        headStyle: { padding: '0 16px' },
-        cellStyle: {
-          textAlign: 'center',
-          fontSize: 14,
-          lineHeight: '20px',
-          fontWeight: 400,
-          padding: '8px',
-        },
-      },
-    },
+    
   ]
 
   return (
