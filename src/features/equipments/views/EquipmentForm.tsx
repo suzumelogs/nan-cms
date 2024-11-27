@@ -1,7 +1,8 @@
 'use client'
 
 import { DetailItem } from '@/features/article/components'
-import { FormLayout, Input } from '@/libs/components/Form'
+import { useCategoryValueLabel } from '@/features/categories/hooks'
+import { FormLayout, Input, Select } from '@/libs/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Stack } from '@mui/material'
 import { useParams, useRouter } from 'next/navigation'
@@ -31,13 +32,14 @@ const EquipmentForm = () => {
       pricePerWeek: 0,
       pricePerMonth: 0,
       stock: 0,
+      categoryId: ''
     },
     resolver: zodResolver(EquipmentCreateInputSchema),
   })
 
   useEffect(() => {
     if (equipmentDetail) {
-      const { name, image, description, pricePerDay, pricePerWeek, pricePerMonth, stock } =
+      const { name, image, description, pricePerDay, pricePerWeek, pricePerMonth, stock, categoryId } =
         equipmentDetail
       setValue('name', name as string)
       setValue('image', image as string)
@@ -46,11 +48,13 @@ const EquipmentForm = () => {
       setValue('pricePerWeek', pricePerWeek as number)
       setValue('pricePerMonth', pricePerMonth as number)
       setValue('stock', stock as number)
+      setValue('categoryId', categoryId as string)
     }
   }, [setValue, equipmentDetail])
 
   const { mutate: createEquipment, isPending: isPendingCreate } = useEquipmentCreate(setError)
   const { mutate: updateEquipment, isPending: isPendingUpdate } = useEquipmentUpdate(setError)
+  const { data: CATEGORIES } = useCategoryValueLabel()
 
   const onSubmit: SubmitHandler<EquipmentCreateInputType> = (data) => {
     const submitData = { ...data, id: equipmentsId as string }
@@ -148,6 +152,15 @@ const EquipmentForm = () => {
               label="Số lượng"
               labelLeft
               placeholder="Số lượng"
+              fullWidth
+            />
+            <Select
+              control={control}
+              name="categoryId"
+              label="Danh mục"
+              labelLeft
+              placeholder="Danh mục"
+              options={CATEGORIES}
               fullWidth
             />
             <DetailItem

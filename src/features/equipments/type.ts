@@ -50,12 +50,40 @@ export const EquipmentCreateInputSchema = z.object({
     .string()
     .min(1, { message: 'Tên thiết bị là bắt buộc' })
     .max(100, { message: 'Tên thiết bị không được dài quá 100 ký tự' }),
+
   image: z.string().url({ message: 'Hình ảnh phải là một URL hợp lệ' }),
-  description: z.string().max(1000, { message: 'Mô tả không được dài quá 1000 ký tự' }).optional(),
-  pricePerDay: z.number().positive({ message: 'Giá theo ngày phải là số dương' }).optional(),
-  pricePerWeek: z.number().positive({ message: 'Giá theo tuần phải là số dương' }).optional(),
-  pricePerMonth: z.number().positive({ message: 'Giá theo tháng phải là số dương' }).optional(),
-  stock: z.number().int().positive({ message: 'Số lượng phải là số nguyên dương' }).optional(),
+
+  description: z
+    .string()
+    .min(10, { message: 'Mô tả phải có ít nhất 10 ký tự' })
+    .max(1000, { message: 'Mô tả không được dài quá 1000 ký tự' }),
+
+  pricePerDay: z
+    .union([z.string(), z.number()])
+    .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
+    .refine((val) => !isNaN(val) && val > 0, { message: 'Giá theo ngày phải là số dương' })
+    .optional(),
+
+  pricePerWeek: z
+    .union([z.string(), z.number()])
+    .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
+    .refine((val) => !isNaN(val) && val > 0, { message: 'Giá theo tuần phải là số dương' })
+    .optional(),
+
+  pricePerMonth: z
+    .union([z.string(), z.number()])
+    .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
+    .refine((val) => !isNaN(val) && val > 0, { message: 'Giá theo tháng phải là số dương' })
+    .optional(),
+
+  stock: z
+    .union([z.string(), z.number()])
+    .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
+    .refine((val) => Number.isInteger(val) && val > 0, {
+      message: 'Số lượng phải là số nguyên dương',
+    })
+    .optional(),
+
   categoryId: z.string().min(1, { message: 'ID danh mục là bắt buộc' }),
 })
 

@@ -88,7 +88,7 @@ export const deleteCategory = async (categoryId: string) => {
 
 export const getCategoryValueLabels = async () => {
   try {
-    const response = await request.get('/categories/value-labels/category')
+    const response = await request.get('/categories/all/label-value')
     return response.data
   } catch (error) {
     throw error
