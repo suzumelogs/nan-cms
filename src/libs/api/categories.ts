@@ -6,6 +6,7 @@ import {
   CategoryUpdateInputType,
   QueryInputCategoryDetailType,
 } from '@/features/categories'
+import { EquipmentListQueryInputType, EquipmentListType } from '@/features/equipments'
 import request from '../config/axios'
 
 export const getListCategories = async (params: CategoryListQueryInputType) => {
@@ -89,6 +90,28 @@ export const deleteCategory = async (categoryId: string) => {
 export const getCategoryValueLabels = async () => {
   try {
     const response = await request.get('/categories/all/label-value')
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getListEquipmentsByCategory = async (
+  id: string,
+  params: EquipmentListQueryInputType,
+): Promise<EquipmentListType> => {
+  const { page, limit, filter } = params
+  try {
+    const response = await request.get<EquipmentListType>(
+      `/categories/${id}/equipments/all/pagination`,
+      {
+        params: {
+          page,
+          limit,
+          filter,
+        },
+      },
+    )
     return response.data
   } catch (error) {
     throw error

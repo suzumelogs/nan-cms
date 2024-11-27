@@ -9,6 +9,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import { useCategoryDetailQuery, useDeleteCategory } from '../hooks'
+import { EquipmentByCategoryList } from './EquipmentByCategoryList'
 
 const CategoryDetail = () => {
   const { categoriesId } = useParams()
@@ -51,6 +52,7 @@ const CategoryDetail = () => {
           />
         </Stack>
       </Box>
+      <EquipmentByCategoryList />
 
       <Modal
         handleCloseModal={handleCloseModal}
