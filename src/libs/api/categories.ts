@@ -50,8 +50,6 @@ export const updateCategory = async (data: CategoryUpdateInputType) => {
   try {
     const { id, ...dataRequest } = data
 
-    console.log(data)
-
     const updatedData = {
       ...dataRequest,
     }
