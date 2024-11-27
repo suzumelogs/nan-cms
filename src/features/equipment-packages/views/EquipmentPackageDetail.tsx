@@ -23,7 +23,7 @@ const EquipmentPackageDetail = () => {
     deleteEquipmentPackage(packageId as string, {
       onSuccess: () => {
         enqueueSnackbar('Xoá thành công', { variant: 'success' })
-        router.push('/equipment-packages')
+        router.push('/package')
       },
     })
   }

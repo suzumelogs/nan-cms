@@ -54,6 +54,8 @@ const EquipmentPackageForm = () => {
     useEquipmentPackageUpdate(setError)
 
   const onSubmit: SubmitHandler<EquipmentPackageCreateInputType> = (data) => {
+    console.log(data);
+    
     const submitData = { ...data, id: packageId as string }
 
     const successCallback = () => {

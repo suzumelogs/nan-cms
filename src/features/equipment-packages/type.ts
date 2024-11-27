@@ -45,10 +45,25 @@ export const EquipmentPackageCreateInputSchema = z.object({
     .string()
     .min(1, { message: 'Tên gói thiết bị là bắt buộc' })
     .max(100, { message: 'Tên gói không được dài quá 100 ký tự' }),
-  description: z.string().max(1000, { message: 'Mô tả không được dài quá 1000 ký tự' }).optional(),
-  pricePerDay: z.number().positive({ message: 'Giá theo ngày phải là số dương' }).optional(),
-  pricePerWeek: z.number().positive({ message: 'Giá theo tuần phải là số dương' }).optional(),
-  pricePerMonth: z.number().positive({ message: 'Giá theo tháng phải là số dương' }).optional(),
+  description: z
+    .string()
+    .min(10, { message: 'Mô tả phải có ít nhất 10 ký tự' })
+    .max(1000, { message: 'Mô tả không được dài quá 1000 ký tự' }),
+  pricePerDay: z
+    .string()
+    .transform((val) => parseFloat(val))
+    .refine((val) => !isNaN(val) && val > 0, { message: 'Giá theo ngày phải là số dương' })
+    .optional(),
+  pricePerWeek: z
+    .string()
+    .transform((val) => parseFloat(val))
+    .refine((val) => !isNaN(val) && val > 0, { message: 'Giá theo tuần phải là số dương' })
+    .optional(),
+  pricePerMonth: z
+    .string()
+    .transform((val) => parseFloat(val))
+    .refine((val) => !isNaN(val) && val > 0, { message: 'Giá theo tháng phải là số dương' })
+    .optional(),
   equipments: z.array(z.string()).optional(),
 })
 

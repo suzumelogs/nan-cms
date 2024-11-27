@@ -42,7 +42,7 @@ const EquipmentPackageList = () => {
       },
     },
     {
-      header: 'Tên thiết bị',
+      header: 'Tên gói thiết bị',
       accessorKey: 'name',
       meta: {
         headStyle: {
