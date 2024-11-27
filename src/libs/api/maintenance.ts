@@ -1,9 +1,17 @@
+import {
+  MaintenanceCreateInputType,
+  MaintenanceDetailResponseType,
+  MaintenanceListQueryInputType,
+  MaintenanceListType,
+  MaintenanceUpdateInputType,
+  QueryInputMaintenanceDetailType,
+} from '@/features/maintenances'
 import request from '../config/axios'
 
-export const getListMaintenances = async (params: any) => {
+export const getListMaintenances = async (params: MaintenanceListQueryInputType) => {
   const { page, limit, filter } = params
   try {
-    const response = await request.get<any>('/maintenances/all/pagination', {
+    const response = await request.get<MaintenanceListType>('/maintenances/all/pagination', {
       params: {
         page,
         limit,
@@ -18,14 +26,14 @@ export const getListMaintenances = async (params: any) => {
 
 export const getMaintenance = async (id: string) => {
   try {
-    const response = await request.get<any>(`/maintenances/get-by/${id}`)
+    const response = await request.get<MaintenanceDetailResponseType>(`/maintenances/get-by/${id}`)
     return response.data.data
   } catch (error) {
     throw error
   }
 }
 
-export const createMaintenance = async (data: any) => {
+export const createMaintenance = async (data: MaintenanceCreateInputType) => {
   const maintenanceData = {
     ...data,
   }
@@ -38,7 +46,7 @@ export const createMaintenance = async (data: any) => {
   }
 }
 
-export const updateMaintenance = async (data: any) => {
+export const updateMaintenance = async (data: MaintenanceUpdateInputType) => {
   try {
     const { id, ...dataRequest } = data
 
@@ -48,6 +56,25 @@ export const updateMaintenance = async (data: any) => {
 
     const response = await request.patch(`/maintenances/update/${id}`, updatedData)
     return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getMaintenanceDetail = async ({
+  column,
+  maintenanceId,
+}: QueryInputMaintenanceDetailType) => {
+  try {
+    const response = await request.get<MaintenanceDetailResponseType>(
+      `/maintenances/get-by/${maintenanceId}`,
+      {
+        params: {
+          column,
+        },
+      },
+    )
+    return response.data.data
   } catch (error) {
     throw error
   }
