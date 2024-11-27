@@ -63,7 +63,7 @@ const PolicyForm = () => {
   return (
     <FormLayout
       onSubmit={handleSubmit(onSubmit)}
-      title={policiesId ? 'Cập nhật Chính Sách' : 'Tạo Mới Chính Sách'}
+      title={policiesId ? 'Cập nhật' : 'Tạo mới'}
       isDirty={isDirty}
       submitLoading={isPendingCreate || isPendingUpdate}
     >
@@ -76,14 +76,13 @@ const PolicyForm = () => {
               valueSx={{ width: { xs: '100%', lg: 500 } }}
             />
           </Stack>
-
           <Stack direction="column" gap={2}>
             <Input
               control={control}
               name="description"
-              label="Mô tả chính sách"
+              label="Mô tả"
               labelLeft
-              placeholder="Mô tả chính sách"
+              placeholder="Mô tả"
               fullWidth
             />
             <Input
@@ -100,7 +99,7 @@ const PolicyForm = () => {
               name="damageProcessingFee"
               label="Phí xử lý hỏng hóc"
               labelLeft
-              placeholder="Phí xử lý hỏng hóc"
+              placeholder="Phí hỏng hóc"
               fullWidth
               type="number"
             />

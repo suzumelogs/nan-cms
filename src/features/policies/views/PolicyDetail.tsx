@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { useDeletePolicy, usePolicyDetailQuery } from '../hooks'
 
 const PolicyDetail = () => {
-  const { policyId } = useParams()
+  const { policiesId } = useParams()
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const { deletePolicy } = useDeletePolicy()
@@ -20,7 +20,7 @@ const PolicyDetail = () => {
   const handleCloseModal = () => setOpen(false)
 
   const handleDeletePolicy = () => {
-    deletePolicy(policyId as string, {
+    deletePolicy(policiesId as string, {
       onSuccess: () => {
         enqueueSnackbar('Xoá chính sách thành công', { variant: 'success' })
         router.push('/policies')
@@ -28,19 +28,24 @@ const PolicyDetail = () => {
     })
   }
 
-  const { data, isLoading } = usePolicyDetailQuery(policyId as string)
+  const { data, isLoading } = usePolicyDetailQuery(policiesId as string)
+
+  const formatCurrency = (value?: number) =>
+    value !== undefined
+      ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value)
+      : ''
 
   return (
     <Stack spacing={4}>
-      <Header title="Chi tiết Chính Sách" editPath="edit" deleteFunction={handleOpenModal} />{' '}
+      <Header title="Chi tiết" editPath="edit" deleteFunction={handleOpenModal} />{' '}
       <Box>
         <Stack spacing={2}>
           <DetailItem label="ID" value={data?.id} isPending={isLoading} />
           <DetailItem label="Mô tả chính sách" value={data?.description} isPending={isLoading} />
-          <DetailItem label="Tỷ lệ đặt cọc" value={data?.depositRate} isPending={isLoading} />
+          <DetailItem label="Tỷ lệ đặt cọc" value={`${data?.depositRate}%`} isPending={isLoading} />
           <DetailItem
-            label="Phí xử lý hỏng hóc"
-            value={data?.damageProcessingFee}
+            label="Phí hỏng hóc"
+            value={formatCurrency(data?.damageProcessingFee)}
             isPending={isLoading}
           />
           <DetailItem

@@ -52,7 +52,7 @@ const PolicyList = () => {
       },
     },
     {
-      header: 'Tỷ lệ đặt cọc (%)',
+      header: 'Tỷ lệ đặt cọc',
       accessorKey: 'depositRate',
       cell: ({ row }) => `${row.original.depositRate}%`,
       meta: {
@@ -66,7 +66,7 @@ const PolicyList = () => {
       },
     },
     {
-      header: 'Phí xử lý hỏng hóc (₫)',
+      header: 'Phí xử lý hỏng hóc',
       accessorKey: 'damageProcessingFee',
       cell: ({ row }) => formatCurrency(row.original.damageProcessingFee),
       meta: {

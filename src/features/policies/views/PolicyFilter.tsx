@@ -28,7 +28,7 @@ const PolicyFilter = () => {
 
       <FilterBar
         columns={filterColumn}
-        createPath="categories/create"
+        createPath="policies/create"
         buttonSearchUnderButtonCreate
       />
     </Stack>

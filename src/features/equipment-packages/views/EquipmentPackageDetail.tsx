@@ -37,7 +37,7 @@ const EquipmentPackageDetail = () => {
 
   return (
     <Stack spacing={4}>
-      <Header title="Chi tiết gói thiết bị" editPath="edit" deleteFunction={handleOpenModal} />
+      <Header title="Chi tiết" editPath="edit" deleteFunction={handleOpenModal} />
 
       <Box>
         <Stack spacing={2}>

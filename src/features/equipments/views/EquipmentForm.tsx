@@ -79,7 +79,7 @@ const EquipmentForm = () => {
   return (
     <FormLayout
       onSubmit={handleSubmit(onSubmit)}
-      title={equipmentsId ? 'Cập nhật thiết bị' : 'Tạo mới thiết bị'}
+      title={equipmentsId ? 'Cập nhật' : 'Tạo mới'}
       isDirty={isDirty}
       submitLoading={isPendingCreate || isPendingUpdate}
     >
