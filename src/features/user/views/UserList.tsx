@@ -100,7 +100,7 @@ const UserList = () => {
       columns={columns}
       next={totalPages}
       action={{
-        disabledDetail: false,
+        disabledDetail: true,
         onDetail: (id) => {
           router.push(`/users/${id}/detail`)
         },

@@ -28,7 +28,6 @@ const UserFilter = () => {
 
       <FilterBar
         columns={filterColumn}
-        createPath="categories/create"
         buttonSearchUnderButtonCreate
       />
     </Stack>
