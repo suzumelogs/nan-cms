@@ -60,12 +60,27 @@ export const DiscountCreateInputSchema = z.object({
     .min(1, { message: 'Mã giảm giá là bắt buộc' })
     .max(50, { message: 'Mã giảm giá không được dài quá 50 ký tự' }),
   discountRate: z
-    .number()
-    .min(0, { message: 'Tỷ lệ giảm giá phải lớn hơn hoặc bằng 0' })
-    .max(100, { message: 'Tỷ lệ giảm giá không được vượt quá 100%' }),
-  validFrom: z.string().min(1, { message: 'Ngày bắt đầu là bắt buộc' }),
-  validTo: z.string().min(1, { message: 'Ngày kết thúc là bắt buộc' }),
-  maxUsage: z.number().min(1, { message: 'Số lần sử dụng tối đa phải lớn hơn hoặc bằng 1' }),
+    .union([z.string(), z.number()])
+    .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
+    .refine((val) => !isNaN(val) && val >= 0 && val <= 100, {
+      message: 'Tỷ lệ giảm giá không được vượt quá 100%',
+    })
+    .optional(),
+  validFrom: z.preprocess(
+    (value) => (value instanceof Date ? value.toISOString() : value),
+    z.string().nonempty({ message: 'Ngày bắt đầu là bắt buộc' }),
+  ),
+  validTo: z.preprocess(
+    (value) => (value instanceof Date ? value.toISOString() : value),
+    z.string().nonempty({ message: 'Ngày kết thúc là bắt buộc' }),
+  ),
+  maxUsage: z
+    .union([z.string(), z.number()])
+    .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
+    .refine((val) => !isNaN(val) && val >= 1, {
+      message: 'Số lần sử dụng tối đa phải lớn hơn hoặc bằng 1',
+    })
+    .optional(),
   currentUsage: z.number().min(0, { message: 'Số lần sử dụng hiện tại phải lớn hơn hoặc bằng 0' }),
   isActive: z.boolean().default(true),
 })

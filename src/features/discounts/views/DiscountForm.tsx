@@ -1,6 +1,7 @@
 'use client'
 
 import { DetailItem } from '@/features/article/components'
+import { DatePicker } from '@/libs/components/DatePicker'
 import { FormLayout, Input } from '@/libs/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Stack } from '@mui/material'
@@ -13,8 +14,8 @@ import { DiscountCreateInputSchema, DiscountCreateInputType } from '../type'
 
 const DiscountForm = () => {
   const router = useRouter()
-  const { discountId } = useParams()
-  const { data: discountDetail } = useDiscountDetail(discountId as string)
+  const { discountsId } = useParams()
+  const { data: discountDetail } = useDiscountDetail(discountsId as string)
 
   const {
     control,
@@ -52,16 +53,16 @@ const DiscountForm = () => {
   const { mutate: updateDiscount, isPending: isPendingUpdate } = useDiscountUpdate(setError)
 
   const onSubmit: SubmitHandler<DiscountCreateInputType> = (data) => {
-    const submitData = { ...data, id: discountId as string }
+    const submitData = { ...data, id: discountsId as string }
 
     const successCallback = () => {
-      enqueueSnackbar(discountId ? 'Cập nhật thành công' : 'Thêm mới thành công', {
+      enqueueSnackbar(discountsId ? 'Cập nhật thành công' : 'Thêm mới thành công', {
         variant: 'success',
       })
-      router.push(discountId ? `/discounts/${discountId}/detail` : '/discounts')
+      router.push(discountsId ? `/discounts/${discountsId}/detail` : '/discounts')
     }
 
-    if (discountId) {
+    if (discountsId) {
       updateDiscount(submitData, { onSuccess: successCallback })
     } else {
       createDiscount(data, { onSuccess: successCallback })
@@ -71,7 +72,7 @@ const DiscountForm = () => {
   return (
     <FormLayout
       onSubmit={handleSubmit(onSubmit)}
-      title={discountId ? 'Cập nhật' : 'Tạo mới'}
+      title={discountsId ? 'Cập nhật' : 'Tạo mới'}
       isDirty={isDirty}
       submitLoading={isPendingCreate || isPendingUpdate}
     >
@@ -103,7 +104,7 @@ const DiscountForm = () => {
               fullWidth
               type="number"
             />
-            <Input
+            <DatePicker
               control={control}
               name="validFrom"
               label="Ngày bắt đầu"
@@ -111,7 +112,7 @@ const DiscountForm = () => {
               placeholder="Ngày bắt đầu"
               fullWidth
             />
-            <Input
+            <DatePicker
               control={control}
               name="validTo"
               label="Ngày kết thúc"
@@ -125,15 +126,6 @@ const DiscountForm = () => {
               label="Số lần sử dụng tối đa"
               labelLeft
               placeholder="Số lần sử dụng tối đa"
-              fullWidth
-              type="number"
-            />
-            <Input
-              control={control}
-              name="currentUsage"
-              label="Số lần sử dụng hiện tại"
-              labelLeft
-              placeholder="Số lần sử dụng hiện tại"
               fullWidth
               type="number"
             />

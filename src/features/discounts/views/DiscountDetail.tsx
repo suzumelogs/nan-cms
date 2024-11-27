@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { useDeleteDiscount, useDiscountDetailQuery } from '../hooks'
 
 const DiscountDetail = () => {
-  const { discountId } = useParams()
+  const { discountsId } = useParams()
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const { deleteDiscount } = useDeleteDiscount()
@@ -20,7 +20,7 @@ const DiscountDetail = () => {
   const handleCloseModal = () => setOpen(false)
 
   const handleDeleteDiscount = () => {
-    deleteDiscount(discountId as string, {
+    deleteDiscount(discountsId as string, {
       onSuccess: () => {
         enqueueSnackbar('Xoá thành công', { variant: 'success' })
         router.push('/discounts')
@@ -28,7 +28,7 @@ const DiscountDetail = () => {
     })
   }
 
-  const { data, isLoading } = useDiscountDetailQuery(discountId as string)
+  const { data, isLoading } = useDiscountDetailQuery(discountsId as string)
 
   return (
     <Stack spacing={4}>

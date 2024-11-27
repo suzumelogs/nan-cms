@@ -28,7 +28,7 @@ const DiscountFilter = () => {
 
       <FilterBar
         columns={filterColumn}
-        createPath="categories/create"
+        createPath="discounts/create"
         buttonSearchUnderButtonCreate
       />
     </Stack>

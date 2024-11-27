@@ -34,7 +34,7 @@ const DiscountList = () => {
       },
     },
     {
-      header: 'Mã Giảm Giá',
+      header: 'Mã giảm giá',
       accessorKey: 'code',
       meta: {
         headStyle: {
@@ -47,7 +47,7 @@ const DiscountList = () => {
       },
     },
     {
-      header: 'Tỷ Lệ Giảm Giá (%)',
+      header: 'Tỷ lệ giảm giá',
       accessorKey: 'discountRate',
       cell: ({ row }) => `${row.original.discountRate}%`,
       meta: {
@@ -57,12 +57,11 @@ const DiscountList = () => {
         cellStyle: {
           ...commonCellStyle,
           width: 150,
-          textAlign: 'right',
         },
       },
     },
     {
-      header: 'Hiệu Lực Từ',
+      header: 'Hiệu lực từ',
       accessorKey: 'validFrom',
       cell: ({ row }) => new Date(row.original.validFrom).toLocaleDateString('vi-VN'),
       meta: {
@@ -76,7 +75,7 @@ const DiscountList = () => {
       },
     },
     {
-      header: 'Hiệu Lực Đến',
+      header: 'Hiệu lực đến',
       accessorKey: 'validTo',
       cell: ({ row }) => new Date(row.original.validTo).toLocaleDateString('vi-VN'),
       meta: {
@@ -90,7 +89,7 @@ const DiscountList = () => {
       },
     },
     {
-      header: 'Sử Dụng Tối Đa',
+      header: 'Sử dụng tối đa',
       accessorKey: 'maxUsage',
       meta: {
         headStyle: {
@@ -99,12 +98,11 @@ const DiscountList = () => {
         cellStyle: {
           ...commonCellStyle,
           width: 150,
-          textAlign: 'right',
         },
       },
     },
     {
-      header: 'Số Lần Đã Sử Dụng',
+      header: 'Số lần đã sử dụng',
       accessorKey: 'currentUsage',
       meta: {
         headStyle: {
@@ -113,7 +111,6 @@ const DiscountList = () => {
         cellStyle: {
           ...commonCellStyle,
           width: 150,
-          textAlign: 'right',
         },
       },
     },
