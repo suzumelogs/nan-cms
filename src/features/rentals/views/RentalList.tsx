@@ -67,8 +67,8 @@ const RentalList = () => {
     },
     {
       header: 'Ngày bắt đầu',
-      accessorKey: 'rentalStartDate',
-      cell: ({ row }) => formatDate(row.original.rentalStartDate),
+      accessorKey: 'startDate',
+      cell: ({ row }) => formatDate(row.original.startDate as string),
       meta: {
         headStyle: {
           padding: '0 16px',
@@ -80,8 +80,8 @@ const RentalList = () => {
     },
     {
       header: 'Ngày kết thúc',
-      accessorKey: 'rentalEndDate',
-      cell: ({ row }) => formatDate(row.original.rentalEndDate),
+      accessorKey: 'endDate',
+      cell: ({ row }) => formatDate(row.original.endDate as string),
       meta: {
         headStyle: {
           padding: '0 16px',
@@ -94,7 +94,7 @@ const RentalList = () => {
     {
       header: 'Tổng tiền',
       accessorKey: 'totalPrice',
-      cell: ({ row }) => formatCurrency(row.original.totalPrice),
+      cell: ({ row }) => formatCurrency(row.original.totalAmount),
       meta: {
         headStyle: {
           padding: '0 16px',

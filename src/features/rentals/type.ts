@@ -1,39 +1,30 @@
 import { PaginationType } from '@/libs/types/pagination'
 import { TypeOf, z } from 'zod'
 
-export enum RentalStatus {
-  pending = 'pending',
-  confirmed = 'confirmed',
-  completed = 'completed',
-  canceled = 'canceled',
-}
-
 export type RentalType = {
   id: string
-  rentalStartDate: string
-  rentalEndDate: string
-  totalPrice: number
-  depositAmount: number
-  damageFee?: number
-  status: RentalStatus
   userId: string
-  deviceId: string
+  totalAmount?: number
+  startDate?: string
+  endDate?: string
+  status: RentalStatusType
+  feedbacks?: string[]
+  items?: RentalItemType[]
   createdAt?: string
   updatedAt?: string
 }
 
 export type RentalDetailType = {
-  id: string
-  rentalStartDate: string
-  rentalEndDate: string
-  totalPrice: string
-  depositAmount: string
-  damageFee?: string
-  status: string
-  userId: string
-  deviceId: string
-  createdAt: string
-  updatedAt: string
+  id?: string
+  userId?: string
+  totalAmount?: number
+  startDate?: string
+  endDate?: string
+  status?: RentalStatusType
+  feedbacks?: string[]
+  items?: RentalItemType[]
+  createdAt?: string
+  updatedAt?: string
 }
 
 export type RentalListType = {
@@ -61,26 +52,38 @@ export type QueryInputRentalDetailType = {
   column?: string
 }
 
+export type RentalStatusType = 'pending' | 'active' | 'completed' | 'canceled'
+
+export type RentalItemType = {
+  id: string
+  name: string
+  description?: string
+  quantity: number
+}
+
 export const RentalCreateInputSchema = z.object({
-  rentalStartDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Ngày bắt đầu thuê phải hợp lệ',
-  }),
-  rentalEndDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Ngày kết thúc thuê phải hợp lệ',
-  }),
-  totalPrice: z.number().min(0, { message: 'Tổng giá phải lớn hơn hoặc bằng 0' }).optional(),
-  depositAmount: z.number().min(0, { message: 'Tiền đặt cọc phải lớn hơn hoặc bằng 0' }).optional(),
-  damageFee: z.number().min(0, { message: 'Phí hỏng hóc phải lớn hơn hoặc bằng 0' }).optional(),
-  status: z.nativeEnum(RentalStatus).default(RentalStatus.pending),
-  userId: z.string().min(1, { message: 'ID người dùng là bắt buộc' }),
-  deviceId: z.string().min(1, { message: 'ID thiết bị là bắt buộc' }),
-  createdAt: z.string().optional(),
-  updatedAt: z.string().optional(),
+  userId: z.string().min(1, { message: 'User ID là bắt buộc' }),
+  totalAmount: z.number().positive({ message: 'Số tiền phải lớn hơn 0' }).optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
+  status: z.enum(['pending', 'active', 'completed', 'canceled']).optional(),
+  items: z
+    .array(
+      z.object({
+        id: z.string().min(1, { message: 'ID của mục là bắt buộc' }),
+        name: z.string().min(1, { message: 'Tên của mục là bắt buộc' }),
+        description: z.string().optional(),
+        quantity: z.number().min(1, { message: 'Số lượng phải ít nhất là 1' }),
+      }),
+    )
+    .optional(),
+  feedbacks: z.array(z.string()).optional(),
 })
 
 export const RentalUpdateInputSchema = RentalCreateInputSchema.extend({
-  id: z.string().min(1, { message: 'ID thuê là bắt buộc' }),
+  id: z.string().min(1, { message: 'ID Rental là bắt buộc' }),
 })
 
 export type RentalCreateInputType = TypeOf<typeof RentalCreateInputSchema>
+
 export type RentalUpdateInputType = TypeOf<typeof RentalUpdateInputSchema>
