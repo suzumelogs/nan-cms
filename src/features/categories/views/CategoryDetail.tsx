@@ -4,7 +4,7 @@ import { DetailItem } from '@/features/article/components'
 import { Header } from '@/libs/components/Form/Layout/Header'
 import { Modal } from '@/libs/components/Modal'
 import { formatDate } from '@/utils/format'
-import { Box, Stack } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { useParams, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
@@ -52,7 +52,10 @@ const CategoryDetail = () => {
           />
         </Stack>
       </Box>
-      <EquipmentByCategoryList />
+      <Box>
+        <Typography fontSize={16} color={"#03396c"} mb={3}>Thiết bị có trong danh mục</Typography>
+        <EquipmentByCategoryList />
+      </Box>
 
       <Modal
         handleCloseModal={handleCloseModal}

@@ -4,11 +4,12 @@ import { DetailItem } from '@/features/article/components'
 import { Header } from '@/libs/components/Form/Layout/Header'
 import { Modal } from '@/libs/components/Modal'
 import { formatDate } from '@/utils/format'
-import { Box, Stack } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { useParams, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import { useDeleteEquipmentPackages, useEquipmentPackagesDetailQuery } from '../hooks'
+import { EquipmentByPackageList } from './EquipmentByPackageList'
 
 const EquipmentPackageDetail = () => {
   const { packageId } = useParams()
@@ -70,6 +71,11 @@ const EquipmentPackageDetail = () => {
             isPending={isLoading}
           />
         </Stack>
+      </Box>
+
+      <Box>
+        <Typography fontSize={16} color={"#03396c"} mb={3}>Thiết bị có trong gói</Typography>
+        <EquipmentByPackageList />
       </Box>
 
       <Modal

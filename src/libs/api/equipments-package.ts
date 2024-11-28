@@ -6,6 +6,7 @@ import {
   EquipmentPackageUpdateInputType,
   QueryInputEquipmentPackageDetailType,
 } from '@/features/equipment-packages'
+import { EquipmentListQueryInputType, EquipmentListType } from '@/features/equipments'
 import request from '../config/axios'
 
 export const getListEquipmentsPackage = async (params: EquipmentPackageListQueryInputType) => {
@@ -97,6 +98,28 @@ export const deleteEquipmentPackage = async (packageId: string) => {
 export const getEquipmentPackageValueLabels = async () => {
   try {
     const response = await request.get('/equipments-package/value-labels/package')
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getListEquipmentsByPackage = async (
+  id: string,
+  params: EquipmentListQueryInputType,
+): Promise<EquipmentListType> => {
+  const { page, limit, filter } = params
+  try {
+    const response = await request.get<EquipmentListType>(
+      `/equipments-package/${id}/equipments/all/pagination`,
+      {
+        params: {
+          page,
+          limit,
+          filter,
+        },
+      },
+    )
     return response.data
   } catch (error) {
     throw error
