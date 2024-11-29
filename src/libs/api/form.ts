@@ -1,7 +1,7 @@
 import request from '../config/axios'
 
 type UploadResponse = {
-  path: string
+  url: string
 }
 
 export const uploadAudio = async (file: File) => {
@@ -17,7 +17,7 @@ export const uploadImage = async (file: File) => {
   const formData = new FormData()
   formData.append('file', file)
 
-  const response = await request.post<UploadResponse>('/uploads/image', formData)
+  const response = await request.post<UploadResponse>('/upload/file', formData)
 
   return response.data
 }

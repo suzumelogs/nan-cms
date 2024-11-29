@@ -16,5 +16,6 @@ export const useRentalListQuery = () => {
   return {
     tableData: getTableData(data),
     totalPages: data.data?.total || 0,
+    refetch: data.refetch,
   }
 }

@@ -1,5 +1,4 @@
 import { uploadImage } from '@/libs/api/form'
-import { generateMediaUrl } from '@/utils/media'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { Box, IconButton, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
@@ -79,8 +78,8 @@ const UploadImage = ({
   const { mutate, isPending } = useMutation({
     mutationFn: uploadImage,
     onSuccess: (data) => {
-      setImage(generateMediaUrl(data.path, 'image'))
-      onChange(data.path)
+      setImage(data.url)
+      onChange(data.url)
     },
     onError: (error) => {
       console.error(error)

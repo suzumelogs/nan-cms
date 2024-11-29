@@ -2,7 +2,7 @@
 
 import { DetailItem } from '@/features/article/components'
 import { useCategoryValueLabel } from '@/features/categories/hooks'
-import { FormLayout, Input, Select } from '@/libs/components/Form'
+import { FormLayout, Input, Select, UploadImage } from '@/libs/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Stack } from '@mui/material'
 import { useParams, useRouter } from 'next/navigation'
@@ -32,15 +32,23 @@ const EquipmentForm = () => {
       pricePerWeek: 0,
       pricePerMonth: 0,
       stock: 0,
-      categoryId: ''
+      categoryId: '',
     },
     resolver: zodResolver(EquipmentCreateInputSchema),
   })
 
   useEffect(() => {
     if (equipmentDetail) {
-      const { name, image, description, pricePerDay, pricePerWeek, pricePerMonth, stock, categoryId } =
-        equipmentDetail
+      const {
+        name,
+        image,
+        description,
+        pricePerDay,
+        pricePerWeek,
+        pricePerMonth,
+        stock,
+        categoryId,
+      } = equipmentDetail
       setValue('name', name as string)
       setValue('image', image as string)
       setValue('description', description as string)
@@ -49,6 +57,7 @@ const EquipmentForm = () => {
       setValue('pricePerMonth', pricePerMonth as number)
       setValue('stock', stock as number)
       setValue('categoryId', categoryId as string)
+      setValue('image', image as string)
     }
   }, [setValue, equipmentDetail])
 
@@ -102,13 +111,11 @@ const EquipmentForm = () => {
               placeholder="Tên thiết bị"
               fullWidth
             />
-            <Input
+            <UploadImage
               control={control}
               name="image"
               label="Hình ảnh"
-              labelLeft
-              placeholder="Hình ảnh"
-              fullWidth
+              content="Kéo ảnh thiết bị vào đây"
             />
             <Input
               control={control}

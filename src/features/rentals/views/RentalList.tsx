@@ -1,14 +1,36 @@
 'use client'
 
+import { cancelRental, confirmRental } from '@/libs/api/rentals'
 import { ReactTable } from '@/libs/components/Table'
+import { Stack, Typography } from '@mui/material'
+import { useMutation } from '@tanstack/react-query'
 import { ColumnDef } from '@tanstack/react-table'
-import { useRouter } from 'next/navigation'
 import { useRentalListQuery } from '../hooks'
 import { RentalType } from '../type'
 
 const RentalList = () => {
-  const { tableData, totalPages } = useRentalListQuery()
-  const router = useRouter()
+  const { tableData, totalPages, refetch } = useRentalListQuery()
+  const { mutate } = useMutation({
+    mutationFn: confirmRental,
+    onSuccess: () => {
+      refetch()
+      alert('Xác nhận thành công')
+    },
+    onError: (error) => {
+      alert('Xác nhận thất bại')
+    },
+  })
+
+  const { mutate: cancel } = useMutation({
+    mutationFn: cancelRental,
+    onSuccess: () => {
+      refetch()
+      alert('Hủy thành công')
+    },
+    onError: (error) => {
+      alert('Hủy thất bại')
+    },
+  })
 
   const formatCurrency = (value?: number) =>
     value !== undefined
@@ -115,6 +137,70 @@ const RentalList = () => {
           ...commonCellStyle,
         },
       },
+      cell: ({ row }) => {
+        const ActionByStatus = ({
+          row,
+        }: {
+          row: { original: { id: string; status: 'pending' | 'active' | 'confirmed' | 'canceled' } }
+        }) => {
+          const handleActionClick = (id: string, action: string) => {
+            switch (action) {
+              case 'confirm':
+                mutate(id)
+                break
+
+              case 'cancel':
+                cancel(id)
+                break
+
+              case 'complete':
+                alert('Hoàn thành')
+                break
+
+              default:
+                break
+            }
+          }
+
+          switch (row.original.status) {
+            case 'pending':
+              return (
+                <Stack direction="row" spacing={2}>
+                  <Typography
+                    onClick={() => handleActionClick(row.original.id, 'confirm')}
+                    sx={{ cursor: 'pointer', color: 'blue' }}
+                  >
+                    Xác nhận
+                  </Typography>
+                  <Typography
+                    onClick={() => handleActionClick(row.original.id, 'cancel')}
+                    sx={{ cursor: 'pointer', color: 'red' }}
+                  >
+                    Hủy
+                  </Typography>
+                </Stack>
+              )
+
+            case 'confirmed':
+              return (
+                <Typography
+                  onClick={() => handleActionClick(row.original.id, 'complete')}
+                  sx={{ cursor: 'pointer', color: 'green' }}
+                >
+                  Đã xác nhận
+                </Typography>
+              )
+
+            case 'canceled':
+              return <Typography sx={{ color: 'red', fontStyle: 'italic' }}>Đã hủy</Typography>
+
+            default:
+              return null
+          }
+        }
+
+        return <ActionByStatus row={row} />
+      },
     },
   ]
 
@@ -125,9 +211,6 @@ const RentalList = () => {
       next={totalPages}
       action={{
         disabledDetail: false,
-        onDetail: (id) => {
-          router.push(`/rentals/${id}/detail`)
-        },
       }}
     />
   )

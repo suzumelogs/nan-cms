@@ -52,7 +52,7 @@ export type QueryInputRentalDetailType = {
   column?: string
 }
 
-export type RentalStatusType = 'pending' | 'active' | 'completed' | 'canceled'
+export type RentalStatusType = 'pending' | 'active' | 'confirmed' | 'canceled'
 
 export type RentalItemType = {
   id: string

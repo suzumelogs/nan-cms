@@ -4,6 +4,7 @@ import { useAuth } from '@/libs/context'
 import { Box, BoxProps, CircularProgress, Stack, styled } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
+import { Header } from './Header'
 import { SIDE_BAR_WIDTH, Sidebar } from './Sidebar'
 
 type LayoutType = BoxProps<
@@ -41,6 +42,7 @@ const LayoutAuth: React.FC<LayoutType> = ({
   return (
     <Stack direction="row">
       {!disableSidebar && <Sidebar />}
+      <Header />
       <ContentPage {...contentProps}>{children}</ContentPage>
     </Stack>
   )
@@ -59,4 +61,5 @@ const ContentPage = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(2),
   },
+  paddingTop: 80,
 }))

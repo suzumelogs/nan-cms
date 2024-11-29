@@ -24,6 +24,12 @@ export const getListEquipments = async (params: EquipmentListQueryInputType) => 
   }
 }
 
+export async function getEquipments() {
+  const response = await request.get<EquipmentListType>(`/equipments/all`)
+
+  return response.data.data
+}
+
 export const getEquipment = async (id: string) => {
   try {
     const response = await request.get<EquipmentDetailResponseType>(`/equipments/get-by/${id}`)

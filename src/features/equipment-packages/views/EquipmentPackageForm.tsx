@@ -1,9 +1,12 @@
 'use client'
 
 import { DetailItem } from '@/features/article/components'
+import { getEquipments } from '@/libs/api/equipments'
 import { FormLayout, Input } from '@/libs/components/Form'
+import { TagInput } from '@/libs/components/Form/TagInput'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Stack } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect } from 'react'
@@ -33,8 +36,22 @@ const EquipmentPackageForm = () => {
       pricePerDay: 0,
       pricePerWeek: 0,
       pricePerMonth: 0,
+      equipmentIds: [],
     },
     resolver: zodResolver(EquipmentPackageCreateInputSchema),
+    values: {
+      description: equipmentPackageDetail?.description || '',
+      name: equipmentPackageDetail?.name || '',
+      pricePerDay: equipmentPackageDetail?.pricePerDay || 0,
+      pricePerWeek: equipmentPackageDetail?.pricePerWeek || 0,
+      pricePerMonth: equipmentPackageDetail?.pricePerMonth || 0,
+      equipmentIds: equipmentPackageDetail?.equipments.map((e) => String(e.equipmentId)) || [],
+    },
+  })
+
+  const { data: equipments } = useQuery({
+    queryKey: ['equipments'],
+    queryFn: getEquipments,
   })
 
   useEffect(() => {
@@ -45,6 +62,10 @@ const EquipmentPackageForm = () => {
       setValue('pricePerDay', pricePerDay as number)
       setValue('pricePerWeek', pricePerWeek as number)
       setValue('pricePerMonth', pricePerMonth as number)
+      setValue(
+        'equipmentIds',
+        equipmentPackageDetail.equipments.map((e) => String(e.equipmentId)),
+      )
     }
   }, [setValue, equipmentPackageDetail])
 
@@ -54,8 +75,8 @@ const EquipmentPackageForm = () => {
     useEquipmentPackageUpdate(setError)
 
   const onSubmit: SubmitHandler<EquipmentPackageCreateInputType> = (data) => {
-    console.log(data);
-    
+    console.log(data)
+
     const submitData = { ...data, id: packageId as string }
 
     const successCallback = () => {
@@ -71,6 +92,12 @@ const EquipmentPackageForm = () => {
       createEquipmentPackage(data, { onSuccess: successCallback })
     }
   }
+
+  const equipmentOptions =
+    equipments?.map((equipment) => ({
+      label: equipment.name,
+      value: equipment.id,
+    })) ?? []
 
   return (
     <FormLayout
@@ -133,6 +160,18 @@ const EquipmentPackageForm = () => {
               placeholder="Giá theo tháng"
               fullWidth
             />
+            {equipmentOptions && (
+              <TagInput
+                width="671px"
+                control={control}
+                name="equipmentIds"
+                label="Thiết bị"
+                labelLeft
+                options={equipmentOptions}
+                multiple
+              />
+            )}
+
             <DetailItem
               label="Ngày tạo"
               value={equipmentPackageDetail?.createdAt || '-'}

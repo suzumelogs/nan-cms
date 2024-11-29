@@ -63,6 +63,7 @@ const Sidebar = () => {
           width: '100%',
           bgcolor: 'background.white',
           overflowY: 'auto',
+          pb: '160px !important',
         }}
         component="nav"
       >

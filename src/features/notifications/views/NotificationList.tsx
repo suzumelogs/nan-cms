@@ -1,14 +1,13 @@
 'use client'
 
 import { ReactTable } from '@/libs/components/Table'
-import { formatDate } from '@/utils/format'
 import { ColumnDef } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
-import { useDamageReportListQuery } from '../hooks'
-import { DamageReportType } from '../type'
+import { useDiscountListQuery } from '../hooks'
+import { DiscountType } from '../type'
 
-const DamageReportList = () => {
-  const { tableData, totalPages } = useDamageReportListQuery()
+const NotificationList = () => {
+  const { tableData, totalPages } = useDiscountListQuery()
   const router = useRouter()
 
   const commonCellStyle = {
@@ -18,7 +17,7 @@ const DamageReportList = () => {
     padding: '8px 16px',
   }
 
-  const columns: ColumnDef<DamageReportType>[] = [
+  const columns: ColumnDef<DiscountType>[] = [
     {
       header: 'STT',
       accessorFn: (row, index) => index + 1,
@@ -30,97 +29,88 @@ const DamageReportList = () => {
         cellStyle: {
           width: 60,
           textAlign: 'center',
-          fontSize: 14,
-          lineHeight: '20px',
-          fontWeight: 400,
-          padding: '8px',
+          ...commonCellStyle,
         },
       },
     },
     {
-      header: 'Mã báo cáo',
-      accessorKey: 'id',
+      header: 'Mã giảm giá',
+      accessorKey: 'code',
       meta: {
         headStyle: {
           padding: '0 16px',
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 200,
-          fontWeight: 500,
+          width: 150,
         },
       },
     },
     {
-      header: 'Chi tiết báo cáo',
-      accessorKey: 'description',
+      header: 'Tỷ lệ giảm giá',
+      accessorKey: 'discountRate',
+      cell: ({ row }) => `${row.original.discountRate}%`,
       meta: {
         headStyle: {
           padding: '0 16px',
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 500,
+          width: 150,
         },
       },
     },
     {
-      header: 'Mã thiết bị',
-      accessorKey: 'equipment.id',
+      header: 'Hiệu lực từ',
+      accessorKey: 'validFrom',
+      cell: ({ row }) => new Date(row.original.validFrom).toLocaleDateString('vi-VN'),
       meta: {
         headStyle: {
           padding: '0 16px',
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 500,
+          width: 150,
         },
       },
     },
     {
-      header: 'Thiết bị',
-      accessorKey: 'equipment.name',
+      header: 'Hiệu lực đến',
+      accessorKey: 'validTo',
+      cell: ({ row }) => new Date(row.original.validTo).toLocaleDateString('vi-VN'),
       meta: {
         headStyle: {
           padding: '0 16px',
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 500,
+          width: 150,
         },
       },
     },
     {
-      header: 'Hình ảnh thiết bị hỏng',
-      accessorKey: 'equipment.image',
-      cell: ({ row }) => (
-        <img
-          src={row.original.image}
-          alt="equipment"
-          style={{ width: 100, height: 100, objectFit: 'cover' }}
-        />
-      ),
+      header: 'Sử dụng tối đa',
+      accessorKey: 'maxUsage',
       meta: {
         headStyle: {
           padding: '0 16px',
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 500,
+          width: 150,
         },
       },
     },
     {
-      header: 'Ngày tạo',
-      accessorKey: 'createdAt',
-      cell: ({ row }) => formatDate(row.original.createdAt as string),
+      header: 'Số lần đã sử dụng',
+      accessorKey: 'currentUsage',
       meta: {
         headStyle: {
           padding: '0 16px',
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 500,
+          width: 150,
         },
       },
     },
@@ -134,11 +124,11 @@ const DamageReportList = () => {
       action={{
         disabledDetail: false,
         onDetail: (id) => {
-          router.push(`/damage-reports/${id}/detail`)
+          router.push(`/discounts/${id}/detail`)
         },
       }}
     />
   )
 }
 
-export { DamageReportList }
+export { NotificationList }

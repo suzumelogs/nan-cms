@@ -101,3 +101,21 @@ export const getListItemsByRental = async (
     throw error
   }
 }
+
+export const confirmRental = async (id: string) => {
+  try {
+    const response = await request.patch(`/rentals/confirm/${id}`)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const cancelRental = async (id: string) => {
+  try {
+    const response = await request.patch(`/rentals/cancel/${id}`)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}

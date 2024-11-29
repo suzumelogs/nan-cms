@@ -1,5 +1,6 @@
 import { PaginationType } from '@/libs/types/pagination'
 import { TypeOf, z } from 'zod'
+import { EquipmentType } from '../equipments'
 
 export type EquipmentPackageType = {
   id: string
@@ -8,7 +9,7 @@ export type EquipmentPackageType = {
   pricePerDay?: number
   pricePerWeek?: number
   pricePerMonth?: number
-  equipments?: string[]
+  equipments: EquipmentType[]
   createdAt?: string
   updatedAt?: string
 }
@@ -66,7 +67,7 @@ export const EquipmentPackageCreateInputSchema = z.object({
     .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
     .refine((val) => !isNaN(val) && val > 0, { message: 'Giá theo tháng phải là số dương' })
     .optional(),
-  equipments: z.array(z.string()).optional(),
+  equipmentIds: z.array(z.string()),
 })
 
 export const EquipmentPackageUpdateInputSchema = EquipmentPackageCreateInputSchema.extend({

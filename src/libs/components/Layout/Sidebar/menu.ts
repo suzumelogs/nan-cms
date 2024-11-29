@@ -26,6 +26,12 @@ export const menus: MenuType[] = [
     active_icon: StackedLineChartIcon,
   },
   {
+    href: '/damage-report',
+    title: 'Báo cáo hỏng',
+    icon: StackedLineChartIcon,
+    active_icon: StackedLineChartIcon,
+  },
+  {
     href: '/users',
     title: 'Người dùng',
     icon: UserIcon,
