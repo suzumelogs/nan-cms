@@ -150,3 +150,19 @@ export type Rental = {
 export type RentalDetail = {
   data: Rental
 }
+
+type Review = {
+  id: string
+  rating: number
+  comment: string
+  adminResponse: string | null
+  replyDate: string | null
+  userId: string
+  rentalId: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type ReviewsResponse = {
+  data: Review[]
+}

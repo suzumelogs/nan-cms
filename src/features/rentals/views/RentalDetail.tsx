@@ -7,7 +7,7 @@ import { formatDate } from '@/utils/format'
 import { Box, Card, CardContent, Grid, Stack, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
-import { RentalDetail as RentalDetailType } from '../type'
+import { RentalDetail as RentalDetailType, ReviewsResponse } from '../type'
 import { AdminReviews } from './AdminFeddback'
 
 const RentalDetail = () => {
@@ -22,7 +22,11 @@ const RentalDetail = () => {
   })
 
   const { data: reviews, isLoading: reviewsLoading } = useQuery({
-    queryFn: async () => await request.get(`feedbacks/rental/${rentalId}`),
+    queryFn: async () => {
+      const response = await request.get<ReviewsResponse>(`feedbacks/rental/${rentalId}`)
+
+      return response.data.data
+    },
     queryKey: ['Rental', rentalId],
   })
 
@@ -113,9 +117,8 @@ const RentalDetail = () => {
                   </Grid>
                 ))}
               </Grid>
-
-              <AdminReviews reviews={reviews} isLoading={reviewsLoading} />
             </Stack>
+            <AdminReviews reviews={reviews} isLoading={reviewsLoading} />
           </Box>
         </Stack>
       </Box>

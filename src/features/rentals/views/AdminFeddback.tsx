@@ -1,4 +1,16 @@
-import { Box, Card, CardContent, Divider, Grid, Rating, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  Rating,
+  Stack,
+  Typography,
+} from '@mui/material'
+import { useState } from 'react'
+import { ModalFeedback } from './ModalFeedback'
 
 const AdminReviews = ({
   reviews,
@@ -7,9 +19,16 @@ const AdminReviews = ({
   reviews: Review[] | undefined
   isLoading: boolean
 }) => {
+  const [open, setOpen] = useState(false)
+  const [feedbackId, setFeedbackId] = useState('')
+  const onClose = () => {
+    setOpen(false)
+    setFeedbackId('')
+  }
+
   return (
-    <Stack spacing={4}>
-      <Typography variant="h4" gutterBottom>
+    <Stack spacing={2} mt={6}>
+      <Typography variant="h1" gutterBottom>
         Đánh giá
       </Typography>
 
@@ -18,136 +37,28 @@ const AdminReviews = ({
         {isLoading ? (
           <Typography variant="h6">Đang tải dữ liệu...</Typography>
         ) : (
-          [
-            {
-              id: '674731515785879c284a17cd',
-              rating: 5,
-              comment: 'MEME',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-27T14:48:47.693Z',
-              updatedAt: '2024-11-27T14:48:47.693Z',
-            },
-            {
-              id: '674731975785879c284a17ce',
-              rating: 5,
-              comment: 'MEME',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-27T14:49:59.610Z',
-              updatedAt: '2024-11-27T14:49:59.610Z',
-            },
-            {
-              id: '6747320e5785879c284a17cf',
-              rating: 5,
-              comment: 'MEME',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-27T14:51:58.285Z',
-              updatedAt: '2024-11-27T14:51:58.285Z',
-            },
-            {
-              id: '674732225785879c284a17d0',
-              rating: 5,
-              comment: 'MAY MOC KHONG HOAT DONG',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-27T14:52:18.059Z',
-              updatedAt: '2024-11-27T14:52:18.059Z',
-            },
-            {
-              id: '6747325e5785879c284a17d1',
-              rating: 5,
-              comment: 'MEME',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-27T14:53:18.422Z',
-              updatedAt: '2024-11-27T14:53:18.422Z',
-            },
-            {
-              id: '6747353d5785879c284a17d3',
-              rating: 5,
-              comment: 'HEHE',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-27T15:05:33.209Z',
-              updatedAt: '2024-11-27T15:05:33.209Z',
-            },
-            {
-              id: '6747e3db319237fcf49273a8',
-              rating: 5,
-              comment: 'HONG ROI',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-28T03:30:34.875Z',
-              updatedAt: '2024-11-28T03:30:34.875Z',
-            },
-            {
-              id: '6749c91a06795fafb0906f95',
-              rating: 5,
-              comment: 'NGOn',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-29T14:00:57.611Z',
-              updatedAt: '2024-11-29T14:00:57.611Z',
-            },
-            {
-              id: '6749cf3d3e6df7c3e3123449',
-              rating: 5,
-              comment: 'HONG ROI',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-29T14:27:08.532Z',
-              updatedAt: '2024-11-29T14:27:08.532Z',
-            },
-            {
-              id: '674b04706add6ee53f240eff',
-              rating: 2,
-              comment: 'DUỌC DAY',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-30T12:26:24.127Z',
-              updatedAt: '2024-11-30T12:26:24.127Z',
-            },
-            {
-              id: '674b059d6add6ee53f240f00',
-              rating: 5,
-              comment: 'HONG ROI',
-              adminResponse: null,
-              replyDate: null,
-              userId: '67060ab42cedc5097e11d5bf',
-              rentalId: '6744226770e9bcea13eeee38',
-              createdAt: '2024-11-30T12:31:25.260Z',
-              updatedAt: '2024-11-30T12:31:25.260Z',
-            },
-          ]?.map((review) => (
+          reviews?.map((review) => (
             <Grid item xs={12} sm={6} md={4} key={review.id}>
               <Card>
                 <CardContent>
                   <Stack spacing={2}>
-                    <Typography variant="h6" color="primary">
-                      Đánh giá của người dùng
-                    </Typography>
+                    <Stack direction="row" alignItems="center" justifyContent="space-between">
+                      <Typography variant="h6" color="primary">
+                        Đánh giá của người dùng
+                      </Typography>
+
+                      {!review.adminResponse && (
+                        <Button
+                          onClick={() => {
+                            setOpen(true)
+                            setFeedbackId(review.id)
+                          }}
+                        >
+                          Phản hồi
+                        </Button>
+                      )}
+                    </Stack>
+
                     <Typography variant="body2" color="text.secondary">
                       <strong>Người dùng:</strong> {review.userId}
                     </Typography>
@@ -192,6 +103,8 @@ const AdminReviews = ({
           ))
         )}
       </Grid>
+
+      <ModalFeedback feedbackId={feedbackId} open={open} handleClose={onClose} />
     </Stack>
   )
 }
