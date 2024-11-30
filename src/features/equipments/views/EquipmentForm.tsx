@@ -3,6 +3,7 @@
 import { DetailItem } from '@/features/article/components'
 import { useCategoryValueLabel } from '@/features/categories/hooks'
 import { FormLayout, Input, Select, UploadImage } from '@/libs/components/Form'
+import { formatDate } from '@/utils/format'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Stack } from '@mui/material'
 import { useParams, useRouter } from 'next/navigation'
@@ -28,9 +29,8 @@ const EquipmentForm = () => {
       name: '',
       image: '',
       description: '',
-      pricePerDay: 0,
-      pricePerWeek: 0,
-      pricePerMonth: 0,
+      basePrice: 0,
+      rentalPrice: 0,
       stock: 0,
       categoryId: '',
     },
@@ -39,22 +39,13 @@ const EquipmentForm = () => {
 
   useEffect(() => {
     if (equipmentDetail) {
-      const {
-        name,
-        image,
-        description,
-        pricePerDay,
-        pricePerWeek,
-        pricePerMonth,
-        stock,
-        categoryId,
-      } = equipmentDetail
+      const { name, image, description, basePrice, rentalPrice, stock, categoryId } =
+        equipmentDetail
       setValue('name', name as string)
       setValue('image', image as string)
       setValue('description', description as string)
-      setValue('pricePerDay', pricePerDay as number)
-      setValue('pricePerWeek', pricePerWeek as number)
-      setValue('pricePerMonth', pricePerMonth as number)
+      setValue('basePrice', basePrice as number)
+      setValue('rentalPrice', rentalPrice as number)
       setValue('stock', stock as number)
       setValue('categoryId', categoryId as string)
       setValue('image', image as string)
@@ -128,28 +119,19 @@ const EquipmentForm = () => {
             <Input
               control={control}
               type="number"
-              name="pricePerDay"
-              label="Giá theo ngày"
+              name="basePrice"
+              label="Giá sản phẩm"
               labelLeft
-              placeholder="Giá theo ngày"
+              placeholder="Giá sản phẩm"
               fullWidth
             />
             <Input
               control={control}
               type="number"
-              name="pricePerWeek"
-              label="Giá theo tuần"
+              name="rentalPrice"
+              label="Giá cho thuê"
               labelLeft
-              placeholder="Giá theo tuần"
-              fullWidth
-            />
-            <Input
-              control={control}
-              type="number"
-              name="pricePerMonth"
-              label="Giá theo tháng"
-              labelLeft
-              placeholder="Giá theo tháng"
+              placeholder="Giá cho thuê"
               fullWidth
             />
             <Input
@@ -170,15 +152,10 @@ const EquipmentForm = () => {
               options={CATEGORIES}
               fullWidth
             />
-            <DetailItem
-              label="Ngày tạo"
-              value={equipmentDetail?.createdAt || '-'}
-              valueSx={{ width: { xs: '100%', lg: 200 } }}
-            />
+            <DetailItem label="Ngày tạo" value={formatDate(equipmentDetail?.createdAt as string)} />
             <DetailItem
               label="Ngày cập nhật"
-              value={equipmentDetail?.updatedAt || '-'}
-              valueSx={{ width: { xs: '100%', lg: 200 } }}
+              value={formatDate(equipmentDetail?.updatedAt as string)}
             />
           </Stack>
         </Stack>

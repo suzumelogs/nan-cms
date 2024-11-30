@@ -24,7 +24,7 @@ export const defaultActionApi = {
     delete: () => {},
     title: '',
   },
-  'damage-report': {
+  'damage-reports': {
     delete: () => {},
     title: '',
   },

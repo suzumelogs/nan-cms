@@ -101,7 +101,7 @@ function Select<T extends FieldValues>({
             option?.label
           ) : (
             <Typography variant="body2" color="grey.200">
-              {placeholder || ' 選択'}
+              {placeholder || 'NAN'}
             </Typography>
           )
         }}

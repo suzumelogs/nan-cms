@@ -87,3 +87,66 @@ export const RentalUpdateInputSchema = RentalCreateInputSchema.extend({
 export type RentalCreateInputType = TypeOf<typeof RentalCreateInputSchema>
 
 export type RentalUpdateInputType = TypeOf<typeof RentalUpdateInputSchema>
+
+type User = {
+  id: string
+  name: string
+  email: string
+  emailVerified: string
+  password: string
+  role: 'user' | 'admin'
+  identityDoc: string
+  phoneNumber: string
+  dateOfBirth: string
+  avatar: string
+  gender: 'Nam' | 'Nữ'
+  statusIdentityDoc: 'verified' | 'unverified'
+  createdAt: string
+  updatedAt: string
+}
+
+type Equipment = {
+  id: string
+  name: string
+  image: string
+  description: string
+  basePrice: number
+  rentalPrice: number
+  stock: number
+  categoryId: string
+  createdAt: string
+  updatedAt: string
+}
+
+type RentalItem = {
+  id: string
+  rentalId: string
+  equipmentId: string
+  packageId: string | null
+  quantity: number
+  durationType: 'day' | 'hour' // assuming "day" or "hour" as duration types
+  durationValue: number
+  price: number
+  createdAt: string
+  updatedAt: string
+  equipment: Equipment
+  package: any // You can define the package type if available
+}
+
+export type Rental = {
+  id: string
+  userId: string
+  totalAmount: number
+  startDate: string
+  endDate: string
+  status: 'confirmed' | 'canceled' | 'pending' // List possible status
+  address: string | null
+  createdAt: string
+  updatedAt: string
+  user: User
+  items: RentalItem[]
+}
+
+export type RentalDetail = {
+  data: Rental
+}

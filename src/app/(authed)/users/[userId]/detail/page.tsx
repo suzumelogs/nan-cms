@@ -1,10 +1,5 @@
-import { UserDetail } from '@/features/user'
-import { TableProvider } from '@/libs/components/Table'
+import { UserForm } from '@/features/user'
 
 export default function Page() {
-  return (
-    <TableProvider>
-      <UserDetail />
-    </TableProvider>
-  )
+  return <UserForm />
 }

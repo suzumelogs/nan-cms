@@ -27,6 +27,7 @@ export const menus: MenuType[] = [
     icon: StackedLineChartIcon,
     active_icon: StackedLineChartIcon,
   },
+
   {
     href: '/categories',
     title: 'Danh mục',

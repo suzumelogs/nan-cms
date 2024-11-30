@@ -35,6 +35,17 @@ export const getDamageReport = async (id: string) => {
   }
 }
 
+export const getDamageReportById = async (id: string) => {
+  try {
+    const response = await request.get<DamageReportDetailResponseType>(
+      `/damage-reports/get-by/${id}`,
+    )
+    return response.data.data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const createDamageReport = async (data: DamageReportCreateInputType) => {
   const damageReportData = {
     ...data,

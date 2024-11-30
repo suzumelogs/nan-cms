@@ -1,6 +1,7 @@
 import { uploadImage } from '@/libs/api/form'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import { Box, IconButton, Typography } from '@mui/material'
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
+import { Box, IconButton, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useMutation } from '@tanstack/react-query'
 import React, { useCallback, useState } from 'react'
@@ -36,12 +37,12 @@ const ImagePreview = styled(Box)(({ theme }) => ({
 
 const RemoveButton = styled(IconButton)(({ theme }) => ({
   position: 'absolute',
-  top: theme.spacing(1),
-  right: theme.spacing(1),
+  top: 0,
+  right: 0,
   borderRadius: theme.shape.borderRadius,
   padding: theme.spacing(0.5),
   '&:hover': {
-    backgroundColor: theme.palette.error.dark,
+    backgroundColor: 'white',
   },
 }))
 
@@ -75,7 +76,7 @@ const UploadImage = ({
 
   const [image, setImage] = useState<string | null>(value ?? null)
 
-  const { mutate, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: uploadImage,
     onSuccess: (data) => {
       setImage(data.url)
@@ -111,13 +112,36 @@ const UploadImage = ({
 
   return (
     <Box width={width} padding={padding} sx={sx}>
-      <DropzoneContainer {...getRootProps()}>
+      <DropzoneContainer {...getRootProps()} height={300}>
         <input {...getInputProps()} id={fieldName} hidden />
         {!image ? (
-          <DropzoneText variant="body2">{content}</DropzoneText>
+          <ImagePreview>
+            {value ? (
+              <img
+                src={value}
+                alt="Preview"
+                style={{ width: '100%', height: '240px', objectFit: 'contain' }}
+              />
+            ) : (
+              <Stack
+                direction="column"
+                spacing={1}
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
+                height="240px"
+              >
+                <InsertPhotoIcon />
+              </Stack>
+            )}
+          </ImagePreview>
         ) : (
           <ImagePreview>
-            <img src={image} alt="Preview" style={{ width: '100%', height: 'auto' }} />
+            <img
+              src={image ?? defaultValue}
+              alt="Preview"
+              style={{ width: '100%', height: '240px', objectFit: 'contain' }}
+            />
             <RemoveButton color="error" onClick={handleRemoveImage}>
               <DeleteOutlineIcon />
             </RemoveButton>

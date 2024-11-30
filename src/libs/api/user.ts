@@ -48,13 +48,9 @@ export const updateUser = async (data: UserUpdateInputType) => {
   }
 }
 
-export const getUserDetail = async ({ column, userId }: QueryInputUserDetailType) => {
+export const getUserDetail = async ({ userId }: QueryInputUserDetailType) => {
   try {
-    const response = await request.get<UserDetailResponseType>(`/user/${userId}`, {
-      params: {
-        column,
-      },
-    })
+    const response = await request.get<UserDetailResponseType>(`/users/${userId}`)
     return response.data.data
   } catch (error) {
     throw error
@@ -64,6 +60,23 @@ export const getUserDetail = async ({ column, userId }: QueryInputUserDetailType
 export const deleteUser = async (userId: string) => {
   try {
     const response = await request.delete(`/user/${userId}`)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const updateIndentityDocStatus = async ({
+  userId,
+  status,
+}: {
+  userId: string
+  status: string
+}) => {
+  try {
+    const response = await request.patch(`/users/${userId}/identity-doc-status`, {
+      statusIdentityDoc: status,
+    })
     return response.data
   } catch (error) {
     throw error

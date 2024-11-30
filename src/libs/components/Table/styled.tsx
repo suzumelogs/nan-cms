@@ -8,12 +8,10 @@ import {
 
 const ButtonPagination = styled(Button)(({ theme }) => ({
   background: theme.palette.base.white + '!important',
-  '&.MuiPaginationItem-root': {
-    padding: 8,
-    borderRadius: 6,
-    border: `1px solid ${theme.palette.mono[200]}`,
-    backgroundColor: theme.palette.base.white,
-  },
+  padding: 0,
+  borderRadius: 6,
+  border: `1px solid ${theme.palette.mono[200]}`,
+  backgroundColor: theme.palette.base.white,
 }))
 
 const ButtonAction = styled(IconButton)({

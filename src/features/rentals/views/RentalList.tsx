@@ -76,18 +76,6 @@ const RentalList = () => {
       },
     },
     {
-      header: 'Tên thiết bị',
-      accessorKey: 'device.name',
-      meta: {
-        headStyle: {
-          padding: '0 16px',
-        },
-        cellStyle: {
-          ...commonCellStyle,
-        },
-      },
-    },
-    {
       header: 'Ngày bắt đầu',
       accessorKey: 'startDate',
       cell: ({ row }) => formatDate(row.original.startDate as string),

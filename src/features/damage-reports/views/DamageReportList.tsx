@@ -60,7 +60,6 @@ const DamageReportList = () => {
         },
         cellStyle: {
           ...commonCellStyle,
-          width: 500,
         },
       },
     },

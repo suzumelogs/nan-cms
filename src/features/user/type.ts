@@ -11,6 +11,10 @@ export type UserType = {
   id: string
   name: string
   email: string
+  phoneNumber?: string
+  gender: string
+  birthOfDate: string
+  statusIdentityDoc: string
   emailVerified?: string
   role: Role
   identityDoc?: string
@@ -31,6 +35,9 @@ export type UserDetailType = {
   emailVerified?: string
   role?: Role
   identityDoc?: string
+  statusIdentityDoc: string
+  phoneNumber?: string
+  gender?: string
   rentals?: string[]
   feedbacks?: string[]
   cart?: string
@@ -83,10 +90,24 @@ export const UserCreateInputSchema = z.object({
   supports: z.array(z.string()).optional(),
 })
 
-export const UserUpdateInputSchema = UserCreateInputSchema.extend({
-  id: z.string().min(1, { message: 'ID người dùng là bắt buộc' }),
-})
-
 export type UserCreateInputType = TypeOf<typeof UserCreateInputSchema>
 
 export type UserUpdateInputType = TypeOf<typeof UserUpdateInputSchema>
+
+export const UserUpdateInputSchema = z.object({
+  id: z.string(),
+  name: z
+    .string()
+    .min(1, { message: 'Tên người dùng là bắt buộc' })
+    .max(100, { message: 'Tên người dùng không được dài quá 100 ký tự' }),
+  email: z.string().email({ message: 'Địa chỉ email không hợp lệ' }),
+  phoneNumber: z.string().optional(),
+  gender: z.string().optional(),
+  birthOfDate: z.string().optional(),
+})
+
+export const UserUpdateIndentityDocSchema = z.object({
+  status: z.string(),
+})
+
+export type UserUpdateIndentityDocType = TypeOf<typeof UserUpdateIndentityDocSchema>

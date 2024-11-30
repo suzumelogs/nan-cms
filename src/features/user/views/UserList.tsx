@@ -2,6 +2,7 @@
 
 import { ReactTable } from '@/libs/components/Table'
 import { ColumnDef } from '@tanstack/react-table'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useUserListQuery } from '../hooks'
 import { UserType } from '../type'
@@ -67,6 +68,67 @@ const UserList = () => {
     {
       header: 'Chứng minh thư',
       accessorKey: 'identityDoc',
+      cell: ({ row }) => {
+        return row.original.identityDoc ? (
+          <Image src={row.original.identityDoc} alt="Chứng minh thư" width={100} height={100} />
+        ) : null
+      },
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+          width: 200,
+          fontWeight: 500,
+        },
+      },
+    },
+    {
+      header: 'Số điện thoại',
+      accessorKey: 'phoneNumber',
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+          width: 200,
+          fontWeight: 500,
+        },
+      },
+    },
+    {
+      header: 'Giới tính',
+      accessorKey: 'gender',
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+          width: 200,
+          fontWeight: 500,
+        },
+      },
+    },
+    {
+      header: 'Đã xác thực',
+      accessorKey: 'statusIdentityDoc',
+      cell: ({ row }) => {
+        switch (row.original.statusIdentityDoc) {
+          case 'verified':
+            return 'Đã xác thực'
+          case 'rejected':
+            return 'Chưa xác thực'
+          default:
+            if (row.original.identityDoc) {
+              return 'Chưa xác thực'
+            } else {
+              return 'Chưa cung cấp CMND'
+            }
+        }
+      },
       meta: {
         headStyle: {
           padding: '0 16px',
@@ -100,7 +162,7 @@ const UserList = () => {
       columns={columns}
       next={totalPages}
       action={{
-        disabledDetail: true,
+        disabledDetail: false,
         onDetail: (id) => {
           router.push(`/users/${id}/detail`)
         },

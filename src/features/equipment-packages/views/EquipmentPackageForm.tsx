@@ -2,7 +2,7 @@
 
 import { DetailItem } from '@/features/article/components'
 import { getEquipments } from '@/libs/api/equipments'
-import { FormLayout, Input } from '@/libs/components/Form'
+import { FormLayout, Input, UploadImage } from '@/libs/components/Form'
 import { TagInput } from '@/libs/components/Form/TagInput'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Stack } from '@mui/material'
@@ -33,18 +33,18 @@ const EquipmentPackageForm = () => {
     defaultValues: {
       name: '',
       description: '',
-      pricePerDay: 0,
-      pricePerWeek: 0,
-      pricePerMonth: 0,
+      basePrice: 0,
+      rentalPrice: 0,
+      image: '',
       equipmentIds: [],
     },
     resolver: zodResolver(EquipmentPackageCreateInputSchema),
     values: {
       description: equipmentPackageDetail?.description || '',
       name: equipmentPackageDetail?.name || '',
-      pricePerDay: equipmentPackageDetail?.pricePerDay || 0,
-      pricePerWeek: equipmentPackageDetail?.pricePerWeek || 0,
-      pricePerMonth: equipmentPackageDetail?.pricePerMonth || 0,
+      basePrice: equipmentPackageDetail?.basePrice || 0,
+      rentalPrice: equipmentPackageDetail?.rentalPrice || 0,
+      image: equipmentPackageDetail?.image || '',
       equipmentIds: equipmentPackageDetail?.equipments.map((e) => String(e.equipmentId)) || [],
     },
   })
@@ -56,12 +56,12 @@ const EquipmentPackageForm = () => {
 
   useEffect(() => {
     if (equipmentPackageDetail) {
-      const { name, description, pricePerDay, pricePerWeek, pricePerMonth } = equipmentPackageDetail
+      const { name, description, basePrice, rentalPrice, image } = equipmentPackageDetail
       setValue('name', name as string)
       setValue('description', description as string)
-      setValue('pricePerDay', pricePerDay as number)
-      setValue('pricePerWeek', pricePerWeek as number)
-      setValue('pricePerMonth', pricePerMonth as number)
+      setValue('basePrice', basePrice as number)
+      setValue('rentalPrice', rentalPrice as number)
+      setValue('image', image as string)
       setValue(
         'equipmentIds',
         equipmentPackageDetail.equipments.map((e) => String(e.equipmentId)),
@@ -136,30 +136,22 @@ const EquipmentPackageForm = () => {
             <Input
               control={control}
               type="number"
-              name="pricePerDay"
-              label="Giá theo ngày"
+              name="basePrice"
+              label="Giá gói"
               labelLeft
-              placeholder="Giá theo ngày"
+              placeholder="Giá gói"
               fullWidth
             />
             <Input
               control={control}
               type="number"
-              name="pricePerWeek"
-              label="Giá theo tuần"
+              name="rentalPrice"
+              label="Giá cho thuê"
               labelLeft
-              placeholder="Giá theo tuần"
+              placeholder="Giá cho thuê"
               fullWidth
             />
-            <Input
-              control={control}
-              type="number"
-              name="pricePerMonth"
-              label="Giá theo tháng"
-              labelLeft
-              placeholder="Giá theo tháng"
-              fullWidth
-            />
+            <UploadImage control={control} name="image" label="Hình ảnh" labelLeft />
             {equipmentOptions && (
               <TagInput
                 width="671px"

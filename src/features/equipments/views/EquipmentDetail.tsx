@@ -44,9 +44,12 @@ const EquipmentDetail = () => {
           <DetailItem label="ID" value={data?.id} isPending={isLoading} />
           <DetailItem label="Tên thiết bị" value={data?.name} isPending={isLoading} />
           <DetailItem label="Mô tả" value={data?.description} isPending={isLoading} />
-          <DetailItem label="Giá theo ngày" value={formatCurrency(data?.pricePerDay)} isPending={isLoading} />
-          <DetailItem label="Giá theo tuần" value={formatCurrency(data?.pricePerWeek)} isPending={isLoading} />
-          <DetailItem label="Giá theo tháng" value={formatCurrency(data?.pricePerMonth)} isPending={isLoading} />
+          <DetailItem label="Giá" value={formatCurrency(data?.basePrice)} isPending={isLoading} />
+          <DetailItem
+            label="Giá cho thuê"
+            value={formatCurrency(data?.rentalPrice)}
+            isPending={isLoading}
+          />
           <DetailItem label="Số lượng" value={data?.stock} isPending={isLoading} />
           <DetailItem
             label="Ngày tạo"

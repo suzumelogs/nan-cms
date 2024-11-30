@@ -46,18 +46,18 @@ const EquipmentPackageDetail = () => {
           <DetailItem label="Tên gói" value={data?.name} isPending={isLoading} />
           <DetailItem label="Mô tả" value={data?.description} isPending={isLoading} />
           <DetailItem
-            label="Giá theo ngày"
-            value={formatCurrency(data?.pricePerDay)}
+            label="Giá gói"
+            value={formatCurrency(data?.basePrice)}
             isPending={isLoading}
           />
           <DetailItem
-            label="Giá theo tuần"
-            value={formatCurrency(data?.pricePerMonth)}
+            label="Giá cho thuê"
+            value={formatCurrency(data?.rentalPrice)}
             isPending={isLoading}
           />
           <DetailItem
-            label="Giá theo tháng"
-            value={formatCurrency(data?.pricePerWeek)}
+            label="Ảnh"
+            image={{ src: data?.image ?? '', alt: data?.name }}
             isPending={isLoading}
           />
           <DetailItem
@@ -74,7 +74,9 @@ const EquipmentPackageDetail = () => {
       </Box>
 
       <Box>
-        <Typography fontSize={16} color={"#03396c"} mb={3}>Thiết bị có trong gói</Typography>
+        <Typography fontSize={16} color={'#03396c'} mb={3}>
+          Thiết bị có trong gói
+        </Typography>
         <EquipmentByPackageList />
       </Box>
 
