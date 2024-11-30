@@ -68,6 +68,10 @@ export const defaultActionApi = {
     delete: () => {},
     title: '',
   },
+  'repair-records': {
+    delete: () => {},
+    title: '',
+  },
 }
 
 export type ActionPath = keyof typeof defaultActionApi

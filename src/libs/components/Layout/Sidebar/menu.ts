@@ -79,4 +79,10 @@ export const menus: MenuType[] = [
     icon: EventAvailableIcon,
     active_icon: EventAvailableIcon,
   },
+  {
+    href: '/repair-records',
+    title: 'Lịch sử sửa chữa',
+    icon: EventAvailableIcon,
+    active_icon: EventAvailableIcon,
+  },
 ]
