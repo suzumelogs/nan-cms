@@ -65,7 +65,7 @@ export const menus: MenuType[] = [
     active_icon: BuildIcon,
   },
   {
-    href: '/damage-report',
+    href: '/damage-reports',
     title: 'Báo cáo hỏng',
     icon: ReportProblemIcon,
     active_icon: ReportProblemIcon,

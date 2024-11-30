@@ -8,6 +8,7 @@ import { Box, Card, CardContent, Grid, Stack, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import { RentalDetail as RentalDetailType } from '../type'
+import { AdminReviews } from './AdminFeddback'
 
 const RentalDetail = () => {
   const { rentalId } = useParams()
@@ -18,6 +19,11 @@ const RentalDetail = () => {
       const { data } = await request.get<RentalDetailType>(`/rentals/get-by/${rentalId}`)
       return data.data
     },
+  })
+
+  const { data: reviews, isLoading: reviewsLoading } = useQuery({
+    queryFn: async () => await request.get(`feedbacks/rental/${rentalId}`),
+    queryKey: ['Rental', rentalId],
   })
 
   const formatCurrency = (value?: number) =>
@@ -107,6 +113,8 @@ const RentalDetail = () => {
                   </Grid>
                 ))}
               </Grid>
+
+              <AdminReviews reviews={reviews} isLoading={reviewsLoading} />
             </Stack>
           </Box>
         </Stack>
