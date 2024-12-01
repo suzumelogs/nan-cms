@@ -1,3 +1,3 @@
-export * from './EquipmentPackageDetail'
-export * from './EquipmentPackageFilter'
-export * from './EquipmentPackageList'
+export * from './UsageRecordDetail'
+export * from './UsageRecordFilter'
+export * from './UsageRecordsList'

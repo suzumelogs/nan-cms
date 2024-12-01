@@ -3,11 +3,11 @@
 import { ReactTable } from '@/libs/components/Table'
 import { ColumnDef } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
-import { useEquipmentPackagesListQuery } from '../hooks'
-import { EquipmentPackageType } from '../type'
+import { useUsageRecordsListQuery } from '../hooks'
+import { UsageRecordType } from '../type'
 
-const EquipmentPackageList = () => {
-  const { tableData, totalPages } = useEquipmentPackagesListQuery()
+const UsageRecordsList = () => {
+  const { tableData, totalPages } = useUsageRecordsListQuery()
   const router = useRouter()
 
   const formatCurrency = (value?: number) =>
@@ -22,7 +22,7 @@ const EquipmentPackageList = () => {
     padding: '8px 16px',
   }
 
-  const columns: ColumnDef<EquipmentPackageType>[] = [
+  const columns: ColumnDef<UsageRecordType>[] = [
     {
       header: 'STT',
       accessorFn: (row, index) => index + 1,
@@ -42,22 +42,8 @@ const EquipmentPackageList = () => {
       },
     },
     {
-      header: 'Tên gói thiết bị',
-      accessorKey: 'name',
-      meta: {
-        headStyle: {
-          padding: '0 16px',
-        },
-        cellStyle: {
-          ...commonCellStyle,
-          width: 200,
-          fontWeight: 500,
-        },
-      },
-    },
-    {
-      header: 'Mô tả',
-      accessorKey: 'description',
+      header: 'ID',
+      accessorKey: 'id',
       meta: {
         headStyle: {
           padding: '0 16px',
@@ -69,17 +55,8 @@ const EquipmentPackageList = () => {
       },
     },
     {
-      header: 'Hình ảnh',
-      accessorKey: 'image',
-      cell: ({ row }) => {
-        return row.original.image ? (
-          <img
-            src={row.original.image}
-            alt={row.original.name}
-            style={{ width: 100, height: 100 }}
-          />
-        ) : null
-      },
+      header: 'ID Thiết bị',
+      accessorKey: 'equipmentId',
       meta: {
         headStyle: {
           padding: '0 16px',
@@ -91,9 +68,8 @@ const EquipmentPackageList = () => {
       },
     },
     {
-      header: 'Giá gói',
-      accessorKey: 'basePrice',
-      cell: ({ row }) => formatCurrency(row.original.basePrice),
+      header: 'ID Thuê',
+      accessorKey: 'rentalId',
       meta: {
         headStyle: {
           padding: '0 16px',
@@ -105,9 +81,9 @@ const EquipmentPackageList = () => {
       },
     },
     {
-      header: 'Giá cho thuê',
-      accessorKey: 'priceWeek',
-      cell: ({ row }) => formatCurrency(row.original.rentalPrice),
+      header: 'Ngày thuê',
+      accessorKey: 'rentalDate',
+      cell: ({ row }) => new Date(row.original.rentalDate).toLocaleDateString('vi-VN'),
       meta: {
         headStyle: {
           padding: '0 16px',
@@ -115,6 +91,49 @@ const EquipmentPackageList = () => {
         cellStyle: {
           ...commonCellStyle,
           width: 150,
+        },
+      },
+    },
+    {
+      header: 'Ngày trả',
+      accessorKey: 'returnDate',
+      cell: ({ row }) =>
+        row.original.returnDate
+          ? new Date(row.original.returnDate).toLocaleDateString('vi-VN')
+          : '',
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+          width: 150,
+        },
+      },
+    },
+    {
+      header: 'Thời gian sử dụng (giờ)',
+      accessorKey: 'usageDuration',
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+          width: 150,
+        },
+      },
+    },
+    {
+      header: 'Sự cố',
+      accessorKey: 'incidents',
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+          width: 200,
         },
       },
     },
@@ -128,11 +147,11 @@ const EquipmentPackageList = () => {
       action={{
         disabledDetail: false,
         onDetail: (id) => {
-          router.push(`/package/${id}/detail`)
+          router.push(`/usage-records/${id}/detail`)
         },
       }}
     />
   )
 }
 
-export { EquipmentPackageList }
+export { UsageRecordsList }

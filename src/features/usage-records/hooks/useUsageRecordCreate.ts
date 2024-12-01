@@ -1,12 +1,10 @@
-import { updateEquipmentPackage } from '@/libs/api/equipments-package'
+import { createUsageRecord } from '@/libs/api/usage-records'
 import { ErrorTypeResponse } from '@/libs/types/axios'
 import { useMutation } from '@tanstack/react-query'
 import { UseFormSetError } from 'react-hook-form'
-import { EquipmentPackageUpdateInputType } from '../type'
+import { UsageRecordCreateInputType } from '../type'
 
-export const useEquipmentPackageUpdate = (
-  setError: UseFormSetError<EquipmentPackageUpdateInputType>,
-) => {
+export const useUsageRecordCreate = (setError: UseFormSetError<UsageRecordCreateInputType>) => {
   const handleMutationError = (error: ErrorTypeResponse) => {
     const { data: responseData } = error.response || {}
     const errorValidation = responseData?.errors
@@ -14,14 +12,14 @@ export const useEquipmentPackageUpdate = (
     if (errorValidation) {
       Object.entries(errorValidation).forEach(([key, message]) => {
         if (message) {
-          setError(key as keyof EquipmentPackageUpdateInputType, { message })
+          setError(key as keyof UsageRecordCreateInputType, { message })
         }
       })
     }
   }
 
   const mutation = useMutation({
-    mutationFn: updateEquipmentPackage,
+    mutationFn: createUsageRecord,
     onError: handleMutationError,
   })
 

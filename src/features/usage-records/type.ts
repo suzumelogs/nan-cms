@@ -4,10 +4,11 @@ import { TypeOf, z } from 'zod'
 export type UsageRecordType = {
   id: string
   equipmentId: string
-  usageDate: string
-  usageDuration?: number
-  usageCost?: number
-  status?: string
+  rentalId?: string
+  rentalDate: string
+  returnDate?: string
+  usageDuration: number
+  incidents?: string
   createdAt?: string
   updatedAt?: string
 }
@@ -15,10 +16,11 @@ export type UsageRecordType = {
 export type UsageRecordDetailType = {
   id?: string
   equipmentId?: string
-  usageDate?: string
+  rentalId?: string
+  rentalDate?: string
+  returnDate?: string
   usageDuration?: number
-  usageCost?: number
-  status?: string
+  incidents?: string
   createdAt?: string
   updatedAt?: string
 }
@@ -29,6 +31,8 @@ export type UsageRecordListType = {
 
 export type UsageRecordSearchInputType = PaginationType & {
   filter?: string
+  equipmentId?: string
+  rentalId?: string
   page?: string
   next?: string
 }
@@ -49,15 +53,19 @@ export type QueryInputUsageRecordDetailType = {
 }
 
 export const UsageRecordCreateInputSchema = z.object({
-  equipmentId: z.string().min(1, { message: 'ID thiết bị là bắt buộc' }),
-  usageDate: z.string().min(1, { message: 'Ngày sử dụng là bắt buộc' }),
-  usageDuration: z.number().optional(),
-  usageCost: z.number().optional(),
-  status: z.string().optional(),
+  equipmentId: z.string().min(1, { message: 'Mã thiết bị là bắt buộc' }),
+  rentalDate: z.date(),
+  returnDate: z.date().optional(),
+  usageDuration: z.number().min(1, { message: 'Thời gian sử dụng phải lớn hơn 0' }),
+  incidents: z
+    .string()
+    .max(1000, { message: 'Mô tả sự cố không được dài quá 1000 ký tự' })
+    .optional(),
+  rentalId: z.string().optional(),
 })
 
 export const UsageRecordUpdateInputSchema = UsageRecordCreateInputSchema.extend({
-  id: z.string().min(1, { message: 'ID bản ghi sử dụng là bắt buộc' }),
+  id: z.string().min(1, { message: 'ID bản ghi là bắt buộc' }),
 })
 
 export type UsageRecordCreateInputType = TypeOf<typeof UsageRecordCreateInputSchema>

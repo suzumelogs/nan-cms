@@ -3,10 +3,10 @@
 import { FilterBar, FilterColumn } from '@/libs/components/Table/FilterBar'
 import { ExVoid } from '@/libs/types/utils'
 import { Stack, Typography } from '@mui/material'
-import { EquipmentPackageSearchInputType } from '../type'
+import { UsageRecordSearchInputType } from '../type'
 
-const EquipmentPackageFilter = () => {
-  const filterColumn: FilterColumn<ExVoid<EquipmentPackageSearchInputType>>[] = [
+const UsageRecordFilter = () => {
+  const filterColumn: FilterColumn<ExVoid<UsageRecordSearchInputType>>[] = [
     {
       field: 'filter',
       type: 'text',
@@ -31,4 +31,4 @@ const EquipmentPackageFilter = () => {
   )
 }
 
-export { EquipmentPackageFilter }
+export { UsageRecordFilter }

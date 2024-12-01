@@ -4,32 +4,31 @@ import { DetailItem } from '@/features/article/components'
 import { Header } from '@/libs/components/Form/Layout/Header'
 import { Modal } from '@/libs/components/Modal'
 import { formatDate } from '@/utils/format'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 import { useParams, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
-import { useDeleteEquipmentPackages, useEquipmentPackagesDetailQuery } from '../hooks'
-import { EquipmentByPackageList } from './EquipmentByPackageList'
+import { useDeleteUsageRecord, useUsageRecordDetailQuery } from '../hooks'
 
-const EquipmentPackageDetail = () => {
-  const { packageId } = useParams()
+const UsageRecordDetail = () => {
+  const { usageRecordId } = useParams()
   const router = useRouter()
   const [open, setOpen] = useState(false)
-  const { deleteEquipmentPackage } = useDeleteEquipmentPackages()
+  const { deleteUsageRecord } = useDeleteUsageRecord()
 
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
-  const handleDeleteEquipmentPackage = () => {
-    deleteEquipmentPackage(packageId as string, {
+  const handleDeleteUsageRecord = () => {
+    deleteUsageRecord(usageRecordId as string, {
       onSuccess: () => {
         enqueueSnackbar('Xoá thành công', { variant: 'success' })
-        router.push('/package')
+        router.push('/usage-records')
       },
     })
   }
 
-  const { data, isLoading } = useEquipmentPackagesDetailQuery(packageId as string)
+  const { data, isLoading } = useUsageRecordDetailQuery(usageRecordId as string)
 
   const formatCurrency = (value?: number) =>
     value !== undefined
@@ -43,23 +42,24 @@ const EquipmentPackageDetail = () => {
       <Box>
         <Stack spacing={2}>
           <DetailItem label="ID" value={data?.id} isPending={isLoading} />
-          <DetailItem label="Tên gói" value={data?.name} isPending={isLoading} />
-          <DetailItem label="Mô tả" value={data?.description} isPending={isLoading} />
+          <DetailItem label="ID Thiết bị" value={data?.equipmentId} isPending={isLoading} />
+          <DetailItem label="ID Thuê" value={data?.rentalId} isPending={isLoading} />
           <DetailItem
-            label="Giá gói"
-            value={formatCurrency(data?.basePrice)}
+            label="Ngày thuê"
+            value={formatDate(data?.rentalDate as string)}
             isPending={isLoading}
           />
           <DetailItem
-            label="Giá cho thuê"
-            value={formatCurrency(data?.rentalPrice)}
+            label="Ngày trả"
+            value={data?.returnDate ? formatDate(data?.returnDate as string) : 'Chưa trả'}
             isPending={isLoading}
           />
           <DetailItem
-            label="Ảnh"
-            image={{ src: data?.image ?? '', alt: data?.name }}
+            label="Thời gian sử dụng (giờ)"
+            value={data?.usageDuration}
             isPending={isLoading}
           />
+          <DetailItem label="Sự cố" value={data?.incidents} isPending={isLoading} />
           <DetailItem
             label="Ngày tạo"
             value={formatDate(data?.createdAt as string)}
@@ -73,23 +73,16 @@ const EquipmentPackageDetail = () => {
         </Stack>
       </Box>
 
-      <Box>
-        <Typography fontSize={16} color={'#03396c'} mb={3}>
-          Thiết bị có trong gói
-        </Typography>
-        <EquipmentByPackageList />
-      </Box>
-
       <Modal
         handleCloseModal={handleCloseModal}
         open={open}
-        handleSubmit={handleDeleteEquipmentPackage}
+        handleSubmit={handleDeleteUsageRecord}
         textSubmit="Đồng ý"
-        description="Bạn có thực sự muốn xóa gói thiết bị này?"
-        title="Xóa gói thiết bị"
+        description="Bạn có thực sự muốn xóa bản ghi thuê thiết bị này?"
+        title="Xóa bản ghi thuê thiết bị"
       />
     </Stack>
   )
 }
 
-export { EquipmentPackageDetail }
+export { UsageRecordDetail }
