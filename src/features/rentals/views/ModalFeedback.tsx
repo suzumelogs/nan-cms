@@ -39,9 +39,7 @@ export const ModalFeedback: React.FC<ModalReportProps> = ({ handleClose, open, f
       await request.patch(`/feedbacks/${feedbackId}/reply`, data)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['Rental'],
-      })
+      queryClient.invalidateQueries()
       enqueueSnackbar('Phản hồi thành công', { variant: 'success' })
       reset()
       handleClose()

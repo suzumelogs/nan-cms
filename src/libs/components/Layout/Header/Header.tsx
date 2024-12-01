@@ -3,7 +3,7 @@
 import { Stack } from '@mui/material'
 import { Notification } from './Notification'
 
-export const HEADER_HEIGHT = 40
+export const HEADER_HEIGHT = 50
 
 export const Header = () => {
   return (

@@ -30,6 +30,7 @@ const EquipmentFilter = () => {
         columns={filterColumn}
         createPath="equipments/create"
         buttonSearchUnderButtonCreate
+        key=""
       />
     </Stack>
   )

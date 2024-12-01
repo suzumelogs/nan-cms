@@ -63,6 +63,7 @@ export type FilterBarProps<F extends FieldValues> = {
   createBtnText?: string
   buttonSearchUnderButtonCreate?: boolean
   isDisabledCreate?: boolean
+  key?: string
 }
 
 function getColumnByField<F extends FieldValues>(columns: FilterColumn<F>[], field: keyof F) {
