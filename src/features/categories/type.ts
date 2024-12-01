@@ -24,9 +24,7 @@ export type CategoryListType = {
 } & PaginationType
 
 export type CategorySearchInputType = PaginationType & {
-  filter?: string
-  page?: string
-  next?: string
+  name?: string
 }
 
 export type CategoryListQueryInputType = CategorySearchInputType & {

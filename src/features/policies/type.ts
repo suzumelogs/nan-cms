@@ -24,7 +24,7 @@ export type PolicyListType = {
 } & PaginationType
 
 export type PolicySearchInputType = PaginationType & {
-  filter?: string
+  damageProcessingFee?: string
   page?: string
   next?: string
 }

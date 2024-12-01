@@ -5,11 +5,11 @@ import { PolicySearchInputType, PolicyType } from '../type'
 
 export const usePolicyListQuery = () => {
   const { input, getTableData, sortOptions } = useTableContext<PolicyType, PolicySearchInputType>()
-  const { page, limit, filter } = input
+  const { page, limit, damageProcessingFee } = input
   const { sort_by, column } = sortOptions || {}
 
   const data = useQuery({
-    queryKey: ['policy-list', page, filter, limit, sort_by, column],
+    queryKey: ['policy-list', page, damageProcessingFee, limit, sort_by, column],
     queryFn: () => getListPolicies({ ...input, limit, ...sortOptions }),
   })
 

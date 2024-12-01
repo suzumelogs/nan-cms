@@ -10,13 +10,13 @@ import { EquipmentListQueryInputType, EquipmentListType } from '@/features/equip
 import request from '../config/axios'
 
 export const getListCategories = async (params: CategoryListQueryInputType) => {
-  const { page, limit, filter } = params
+  const { page, limit, name } = params
   try {
     const response = await request.get<CategoryListType>('/categories/all/pagination', {
       params: {
         page,
         limit,
-        filter,
+        name,
       },
     })
     return response.data
@@ -100,7 +100,7 @@ export const getListEquipmentsByCategory = async (
   id: string,
   params: EquipmentListQueryInputType,
 ): Promise<EquipmentListType> => {
-  const { page, limit, filter } = params
+  const { page, limit } = params
   try {
     const response = await request.get<EquipmentListType>(
       `/categories/${id}/equipments/all/pagination`,
@@ -108,7 +108,7 @@ export const getListEquipmentsByCategory = async (
         params: {
           page,
           limit,
-          filter,
+          name,
         },
       },
     )

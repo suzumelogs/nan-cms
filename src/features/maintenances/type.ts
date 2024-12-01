@@ -30,7 +30,7 @@ export type MaintenanceListType = {
 } & PaginationType
 
 export type MaintenanceSearchInputType = PaginationType & {
-  filter?: string
+  status?: string
   page?: string
   next?: string
 }

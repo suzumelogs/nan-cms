@@ -9,11 +9,11 @@ export const useDamageReportListQuery = () => {
     DamageReportSearchInputType
   >()
 
-  const { page, limit, filter } = input
+  const { page, limit, status } = input
   const { sort_by, column } = sortOptions || {}
 
   const data = useQuery({
-    queryKey: ['damage-report-list', page, filter, limit, sort_by, column],
+    queryKey: ['damage-report-list', page, status, limit, sort_by, column],
     queryFn: () => getListDamageReports({ ...input, limit, ...sortOptions }),
   })
 

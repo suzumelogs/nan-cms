@@ -8,12 +8,12 @@ export const useEquipmentPackagesListQuery = () => {
     EquipmentPackageType,
     EquipmentPackageSearchInputType
   >()
-  const { page, limit, filter } = input
+  const { page, limit, name } = input
   const { sort_by, column } = sortOptions || {}
 
   const data = useQuery({
-    queryKey: ['equipment-package-list', page, filter, limit, sort_by, column],
-    queryFn: () => getListEquipmentsPackage({ ...input, limit, ...sortOptions }),
+    queryKey: ['equipment-package-list', page, name, limit, sort_by, column],
+    queryFn: () => getListEquipmentsPackage({ ...input, name, limit, ...sortOptions }),
   })
 
   return {

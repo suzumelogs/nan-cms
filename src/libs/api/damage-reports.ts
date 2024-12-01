@@ -9,13 +9,13 @@ import {
 import request from '../config/axios'
 
 export const getListDamageReports = async (params: DamageReportListQueryInputType) => {
-  const { page, limit, filter } = params
+  const { page, limit, status } = params
   try {
     const response = await request.get<DamageReportListType>('/damage-reports/all/pagination', {
       params: {
         page,
         limit,
-        filter,
+        status,
       },
     })
     return response.data

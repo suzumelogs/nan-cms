@@ -119,6 +119,15 @@ const EquipmentDetail = () => {
     setFeedbackId('')
   }
 
+  const { data: countRental } = useQuery({
+    queryKey: ['rental-count-equipment', equipmentsId],
+    queryFn: async () => {
+      const response = await request.get(`/rentals/rental-count/equipment/${equipmentsId}`)
+
+      return response.data
+    },
+  })
+
   return (
     <Stack spacing={4}>
       <Header title="Chi tiết" editPath="edit" deleteFunction={handleOpenModal} />
@@ -136,6 +145,12 @@ const EquipmentDetail = () => {
           />
           <DetailItem label="Số lượng" value={data?.stock} isPending={isLoading} />
           <DetailItem
+            label="
+            Số lần cho thuê"
+            value={countRental?.rentalCount}
+            isPending={isLoading}
+          />
+          <DetailItem
             label="Ngày tạo"
             value={formatDate(data?.createdAt as string)}
             isPending={isLoading}
@@ -145,7 +160,6 @@ const EquipmentDetail = () => {
             value={formatDate(data?.updatedAt as string)}
             isPending={isLoading}
           />
-
           <Stack bgcolor="white" p={2} spacing={2}>
             <Typography variant="h6" fontWeight={600}>
               Đánh giá sản phẩm

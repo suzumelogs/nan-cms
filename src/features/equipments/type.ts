@@ -28,7 +28,7 @@ export type EquipmentListType = {
 } & PaginationType
 
 export type EquipmentSearchInputType = PaginationType & {
-  filter?: string
+  name?: string
   categoryId?: string
 }
 

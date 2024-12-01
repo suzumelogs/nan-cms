@@ -8,7 +8,7 @@ import { PolicySearchInputType } from '../type'
 const PolicyFilter = () => {
   const filterColumn: FilterColumn<ExVoid<PolicySearchInputType>>[] = [
     {
-      field: 'filter',
+      field: 'damageProcessingFee',
       type: 'text',
       placeholder: 'Tìm kiếm',
       defaultValue: '',

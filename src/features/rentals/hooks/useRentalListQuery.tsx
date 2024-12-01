@@ -5,11 +5,11 @@ import { RentalSearchInputType, RentalType } from '../type'
 
 export const useRentalListQuery = () => {
   const { input, getTableData, sortOptions } = useTableContext<RentalType, RentalSearchInputType>()
-  const { page, limit, filter } = input
+  const { page, limit, status } = input
   const { sort_by, column } = sortOptions || {}
 
   const data = useQuery({
-    queryKey: ['rental-list', page, filter, limit, sort_by, column],
+    queryKey: ['rental-list', page, status, limit, sort_by, column],
     queryFn: () => getListRentals({ ...input, limit, ...sortOptions }),
   })
 

@@ -8,7 +8,7 @@ import { DamageReportSearchInputType } from '../type'
 const DamageReportFilter = () => {
   const filterColumn: FilterColumn<ExVoid<DamageReportSearchInputType>>[] = [
     {
-      field: 'filter',
+      field: 'status',
       type: 'text',
       placeholder: 'Tìm kiếm',
       defaultValue: '',

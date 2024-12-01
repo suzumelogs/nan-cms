@@ -9,13 +9,13 @@ import {
 import request from '../config/axios'
 
 export const getListEquipments = async (params: EquipmentListQueryInputType) => {
-  const { page, limit, filter } = params
+  const { page, limit, name } = params
   try {
     const response = await request.get<EquipmentListType>('/equipments/all/pagination', {
       params: {
         page,
         limit,
-        filter,
+        name,
       },
     })
     return response.data

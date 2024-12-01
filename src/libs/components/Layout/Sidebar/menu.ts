@@ -3,7 +3,6 @@ import BuildIcon from '@mui/icons-material/Build'
 import CategoryIcon from '@mui/icons-material/Category'
 import DevicesIcon from '@mui/icons-material/Devices'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
-import HistoryIcon from '@mui/icons-material/History'
 import InventoryIcon from '@mui/icons-material/Inventory'
 import PersonIcon from '@mui/icons-material/Person'
 import PolicyIcon from '@mui/icons-material/Policy'
@@ -77,13 +76,6 @@ export const menus: MenuType[] = [
     title: 'Báo cáo hỏng',
     icon: ReportProblemIcon,
     active_icon: ReportProblemIcon,
-    roles: ['admin', 'super_admin'],
-  },
-  {
-    href: '/usage-records',
-    title: 'Lịch sử sử dụng',
-    icon: HistoryIcon,
-    active_icon: HistoryIcon,
     roles: ['admin', 'super_admin'],
   },
   {

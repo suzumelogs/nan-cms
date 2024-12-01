@@ -8,11 +8,11 @@ export const useMaintenanceListQuery = () => {
     MaintenanceType,
     MaintenanceSearchInputType
   >()
-  const { page, limit, filter } = input
+  const { page, limit, status } = input
   const { sort_by, column } = sortOptions || {}
 
   const data = useQuery({
-    queryKey: ['maintenances-list', page, filter, limit, sort_by, column],
+    queryKey: ['maintenances-list', page, status, limit, sort_by, column],
     queryFn: () => getListMaintenances({ ...input, limit, ...sortOptions }),
   })
 

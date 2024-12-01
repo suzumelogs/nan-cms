@@ -5,6 +5,7 @@ import { getFeedbackByEquipmentIdOfPackageId } from '@/features/equipments'
 import { ModalFeedback } from '@/features/rentals/views/ModalFeedback'
 import { Header } from '@/libs/components/Form/Layout/Header'
 import { Modal } from '@/libs/components/Modal'
+import request from '@/libs/config/axios'
 import { formatDate } from '@/utils/format'
 import { Box, Button, Rating, Stack, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
@@ -55,6 +56,15 @@ const EquipmentPackageDetail = () => {
     setFeedbackId('')
   }
 
+  const { data: countRental } = useQuery({
+    queryKey: ['rental-count-package', packageId],
+    queryFn: async () => {
+      const response = await request.get(`/rentals/rental-count/package/${packageId}`)
+
+      return response.data
+    },
+  })
+
   return (
     <Stack spacing={4}>
       <Header title="Chi tiết" editPath="edit" deleteFunction={handleOpenModal} />
@@ -87,6 +97,13 @@ const EquipmentPackageDetail = () => {
           <DetailItem
             label="Ngày cập nhật"
             value={formatDate(data?.updatedAt as string)}
+            isPending={isLoading}
+          />
+
+          <DetailItem
+            label="
+            Số lần cho thuê"
+            value={countRental?.rentalCount}
             isPending={isLoading}
           />
         </Stack>

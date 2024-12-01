@@ -8,7 +8,7 @@ import { MaintenanceSearchInputType } from '../type'
 const MaintenanceFilter = () => {
   const filterColumn: FilterColumn<ExVoid<MaintenanceSearchInputType>>[] = [
     {
-      field: 'filter',
+      field: 'status',
       type: 'text',
       placeholder: 'Tìm kiếm',
       defaultValue: '',

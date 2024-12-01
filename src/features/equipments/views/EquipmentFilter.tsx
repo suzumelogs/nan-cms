@@ -8,7 +8,7 @@ import { EquipmentSearchInputType } from '../type'
 const EquipmentFilter = () => {
   const filterColumn: FilterColumn<ExVoid<EquipmentSearchInputType>>[] = [
     {
-      field: 'filter',
+      field: 'name',
       type: 'text',
       placeholder: 'Tìm kiếm',
       defaultValue: '',
@@ -30,7 +30,6 @@ const EquipmentFilter = () => {
         columns={filterColumn}
         createPath="equipments/create"
         buttonSearchUnderButtonCreate
-        key=""
       />
     </Stack>
   )

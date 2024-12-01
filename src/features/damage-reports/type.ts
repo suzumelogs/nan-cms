@@ -30,7 +30,7 @@ export type DamageReportListType = {
 } & PaginationType
 
 export type DamageReportSearchInputType = PaginationType & {
-  filter?: string
+  status?: string
   page?: string
   next?: string
 }

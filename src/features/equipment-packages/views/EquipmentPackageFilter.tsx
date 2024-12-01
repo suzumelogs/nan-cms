@@ -8,7 +8,7 @@ import { EquipmentPackageSearchInputType } from '../type'
 const EquipmentPackageFilter = () => {
   const filterColumn: FilterColumn<ExVoid<EquipmentPackageSearchInputType>>[] = [
     {
-      field: 'filter',
+      field: 'name',
       type: 'text',
       placeholder: 'Tìm kiếm',
       defaultValue: '',

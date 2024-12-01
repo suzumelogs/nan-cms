@@ -24,7 +24,7 @@ export type EquipmentPackageListType = {
 } & PaginationType
 
 export type EquipmentPackageSearchInputType = PaginationType & {
-  filter?: string
+  name?: string
   categoryId?: string
 }
 

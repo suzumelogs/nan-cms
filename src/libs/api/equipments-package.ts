@@ -10,7 +10,7 @@ import { EquipmentListQueryInputType, EquipmentListType } from '@/features/equip
 import request from '../config/axios'
 
 export const getListEquipmentsPackage = async (params: EquipmentPackageListQueryInputType) => {
-  const { page, limit, filter } = params
+  const { page, limit, name } = params
   try {
     const response = await request.get<EquipmentPackageListType>(
       '/equipments-package/all/pagination',
@@ -18,7 +18,7 @@ export const getListEquipmentsPackage = async (params: EquipmentPackageListQuery
         params: {
           page,
           limit,
-          filter,
+          name,
         },
       },
     )
@@ -108,7 +108,7 @@ export const getListEquipmentsByPackage = async (
   id: string,
   params: EquipmentListQueryInputType,
 ): Promise<EquipmentListType> => {
-  const { page, limit, filter } = params
+  const { page, limit, name } = params
   try {
     const response = await request.get<EquipmentListType>(
       `/equipments-package/${id}/equipments/all/pagination`,
@@ -116,7 +116,7 @@ export const getListEquipmentsByPackage = async (
         params: {
           page,
           limit,
-          filter,
+          name,
         },
       },
     )

@@ -9,13 +9,13 @@ import {
 import request from '../config/axios'
 
 export const getListPolicies = async (params: PolicyListQueryInputType) => {
-  const { page, limit, filter } = params
+  const { page, limit, damageProcessingFee } = params
   try {
     const response = await request.get<PolicyListType>('/policies/all/pagination', {
       params: {
         page,
         limit,
-        filter,
+        damageProcessingFee,
       },
     })
     return response.data

@@ -8,7 +8,7 @@ import { RentalSearchInputType } from '../type'
 const RentalFilter = () => {
   const filterColumn: FilterColumn<ExVoid<RentalSearchInputType>>[] = [
     {
-      field: 'filter',
+      field: 'status',
       type: 'text',
       placeholder: 'Tìm kiếm',
       defaultValue: '',

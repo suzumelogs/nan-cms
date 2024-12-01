@@ -8,12 +8,12 @@ export const useEquipmentListQuery = () => {
     EquipmentType,
     EquipmentSearchInputType
   >()
-  const { page, limit, filter } = input
+  const { page, limit, name } = input
   const { sort_by, column } = sortOptions || {}
 
   const data = useQuery({
-    queryKey: ['equipments-list', page, filter, limit, sort_by, column],
-    queryFn: () => getListEquipments({ ...input, limit, ...sortOptions }),
+    queryKey: ['equipments-list', page, name, limit, sort_by, column],
+    queryFn: () => getListEquipments({ ...input, name, limit, ...sortOptions }),
   })
 
   return {

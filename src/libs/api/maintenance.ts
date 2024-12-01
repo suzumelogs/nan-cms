@@ -9,13 +9,13 @@ import {
 import request from '../config/axios'
 
 export const getListMaintenances = async (params: MaintenanceListQueryInputType) => {
-  const { page, limit, filter } = params
+  const { page, limit, status } = params
   try {
     const response = await request.get<MaintenanceListType>('/maintenances/all/pagination', {
       params: {
         page,
         limit,
-        filter,
+        status,
       },
     })
     return response.data
