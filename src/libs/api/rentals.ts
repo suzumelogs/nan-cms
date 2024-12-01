@@ -87,13 +87,13 @@ export const getListItemsByRental = async (
   id: string,
   params: RentalListQueryInputType,
 ): Promise<RentalListType> => {
-  const { page, limit, filter } = params
+  const { page, limit, status } = params
   try {
     const response = await request.get<RentalListType>(`/rentals/${id}/items/all/pagination`, {
       params: {
         page,
         limit,
-        filter,
+        status,
       },
     })
     return response.data

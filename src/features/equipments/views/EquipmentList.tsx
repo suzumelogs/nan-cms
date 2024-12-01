@@ -100,6 +100,18 @@ const EquipmentList = () => {
       },
     },
     {
+      header: 'Số lần bảo trì',
+      accessorKey: 'maintainCount',
+      meta: {
+        headStyle: {
+          padding: '0 16px',
+        },
+        cellStyle: {
+          ...commonCellStyle,
+        },
+      },
+    },
+    {
       header: 'Giá cho thuê ',
       accessorKey: 'priceWeek',
       cell: ({ row }) => formatCurrency(row.original.rentalPrice),

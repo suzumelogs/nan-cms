@@ -1,10 +1,12 @@
 'use client'
 
 import { DetailItem } from '@/features/article/components'
+import { getEquipments } from '@/libs/api/equipments'
 import { DatePicker } from '@/libs/components/DatePicker'
-import { FormLayout, Input } from '@/libs/components/Form'
+import { FormLayout, Input, Select } from '@/libs/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Stack } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect } from 'react'
@@ -28,7 +30,7 @@ const MaintenanceForm = () => {
       maintenanceDate: '',
       description: '',
       maintenanceCost: 0,
-      equipmentId: ''
+      equipmentId: '',
     },
     resolver: zodResolver(MaintenanceCreateInputSchema),
   })
@@ -63,6 +65,17 @@ const MaintenanceForm = () => {
     }
   }
 
+  const { data: equipments } = useQuery({
+    queryKey: ['equipments'],
+    queryFn: getEquipments,
+  })
+
+  const equipmentOptions =
+    equipments?.map((equipment) => ({
+      label: equipment.name,
+      value: equipment.id,
+    })) ?? []
+
   return (
     <FormLayout
       onSubmit={handleSubmit(onSubmit)}
@@ -81,12 +94,14 @@ const MaintenanceForm = () => {
           </Stack>
 
           <Stack direction="column" gap={2}>
-            <DatePicker  control={control}
+            <DatePicker
+              control={control}
               name="maintenanceDate"
               label="Ngày bảo trì"
               labelLeft
               placeholder="Ngày bảo trì"
-              fullWidth/>
+              fullWidth
+            />
             <Input
               control={control}
               name="description"
@@ -104,13 +119,15 @@ const MaintenanceForm = () => {
               type="number"
               fullWidth
             />
-            <Input
+            <Select
               control={control}
               name="equipmentId"
               label="Thiết bị"
               labelLeft
               placeholder="Thiết bị"
               fullWidth
+              hiddenEmpty
+              options={equipmentOptions}
             />
             <DetailItem
               label="Ngày tạo"

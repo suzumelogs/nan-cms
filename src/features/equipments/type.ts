@@ -14,6 +14,7 @@ export type EquipmentType = {
   createdAt?: string
   updatedAt?: string
   equipmentId?: string
+  maintainCount: number
 }
 
 export type EquipmentDetailType = EquipmentType & {

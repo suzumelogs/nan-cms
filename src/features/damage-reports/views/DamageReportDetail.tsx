@@ -1,43 +1,73 @@
 'use client'
 
 import { DetailItem } from '@/features/article/components'
-import { useDeletePolicy } from '@/features/policies/hooks'
-import { Header } from '@/libs/components/Form/Layout/Header'
-import { Modal } from '@/libs/components/Modal'
+import { UserUpdateIndentityDocSchema, UserUpdateIndentityDocType } from '@/features/user'
+import { FormLayout, Select } from '@/libs/components/Form'
+import request from '@/libs/config/axios'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'
-import { useParams, useRouter } from 'next/navigation'
+import { useMutation } from '@tanstack/react-query'
+import { useParams } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { useDamageReportDetail } from '../hooks'
 
 const DamageReportDetail = () => {
   const { id } = useParams()
-  const router = useRouter()
-  const [open, setOpen] = useState(false)
-  const { deletePolicy } = useDeletePolicy()
+  const { data, isLoading } = useDamageReportDetail(id as string)
 
-  const handleOpenModal = () => setOpen(true)
-  const handleCloseModal = () => setOpen(false)
+  const { control, handleSubmit, setValue } = useForm<UserUpdateIndentityDocType>({
+    defaultValues: {
+      status: '',
+    },
+    values: {
+      status: data?.status as string,
+    },
+    resolver: zodResolver(UserUpdateIndentityDocSchema),
+  })
 
-  const handleDeletePolicy = () => {
-    deletePolicy(id as string, {
-      onSuccess: () => {
-        enqueueSnackbar('Xoá chính sách thành công', { variant: 'success' })
-        router.push('/policies')
-      },
+  useEffect(() => {
+    if (data?.status) {
+      setValue('status', data?.status)
+    }
+  }, [data])
+
+  const { mutate } = useMutation({
+    mutationFn: async ({ status, id }: { status: string; id: string }) => {
+      const response = await request.patch(`/damage-reports/update/${id}/status`, {
+        status,
+      })
+
+      return response.data
+    },
+    onSuccess: (data: UserUpdateIndentityDocType) => {
+      enqueueSnackbar('Thay đổi trạng thái thành công', { variant: 'success' })
+    },
+    onError: (error) => {
+      enqueueSnackbar('Thay đổi trạng thái thất bại', { variant: 'error' })
+    },
+  })
+
+  const onSubmit = (data: UserUpdateIndentityDocType) => {
+    mutate({
+      id: id as string,
+      ...data,
     })
   }
 
-  const { data, isLoading } = useDamageReportDetail(id as string)
-
   return (
-    <Stack spacing={4}>
-      <Header title="Chi tiết" />
+    <FormLayout
+      isDirty={false}
+      onSubmit={handleSubmit(onSubmit)}
+      title="Chi tiết"
+      isLoading={isLoading}
+    >
       <Box>
         <Stack spacing={2}>
           <DetailItem label="ID" value={data?.id} isPending={isLoading} />
           <DetailItem label="Mô tả chính sách" value={data?.description} isPending={isLoading} />
-          <DetailItem label="Trạng thái" value={data?.status} isPending={isLoading} />
+          {/* <DetailItem label="Trạng thái" value={data?.status} isPending={isLoading} /> */}
           <DetailItem
             label="Ảnh"
             image={{
@@ -47,16 +77,40 @@ const DamageReportDetail = () => {
             isPending={isLoading}
           />
         </Stack>
+
+        <Stack direction="row" spacing={2}>
+          <Stack spacing={2} width={{ xs: '100%', lg: '50%' }}>
+            <Select
+              control={control}
+              name="status"
+              label="Trạng thái"
+              labelLeft
+              fullWidth
+              placeholder="Chọn trạng thái"
+              hiddenEmpty
+              options={[
+                {
+                  label: 'Chưa xử lý',
+                  value: 'pending',
+                },
+                {
+                  label: 'Hỏng nặng',
+                  value: 'heavy',
+                },
+                {
+                  label: 'Hỏng nhẹ',
+                  value: 'normal',
+                },
+                {
+                  label: 'Huỷ',
+                  value: 'cancel',
+                },
+              ]}
+            />
+          </Stack>
+        </Stack>
       </Box>
-      <Modal
-        handleCloseModal={handleCloseModal}
-        open={open}
-        handleSubmit={handleDeletePolicy}
-        textSubmit="Đồng ý"
-        description="Bạn có thực sự muốn xóa chính sách này?"
-        title="Xóa Chính Sách"
-      />
-    </Stack>
+    </FormLayout>
   )
 }
 

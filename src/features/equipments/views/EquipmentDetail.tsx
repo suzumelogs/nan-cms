@@ -143,8 +143,6 @@ const EquipmentDetail = () => {
     },
   })
 
-  console.log(countRental)
-
   return (
     <Stack spacing={4}>
       <Header title="Chi tiết" editPath="edit" deleteFunction={handleOpenModal} />
@@ -161,6 +159,7 @@ const EquipmentDetail = () => {
             isPending={isLoading}
           />
           <DetailItem label="Số lượng" value={data?.stock} isPending={isLoading} />
+          <DetailItem label="Số lần bảo trì" value={data?.maintainCount} isPending={isLoading} />
 
           <DetailItem
             label="Ngày tạo"

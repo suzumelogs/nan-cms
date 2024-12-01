@@ -35,7 +35,7 @@ const UserForm = () => {
 
   const { mutate } = useMutation({
     mutationFn: updateIndentityDocStatus,
-    onMutate: (data: UserUpdateIndentityDocType) => {
+    onSuccess: (data: UserUpdateIndentityDocType) => {
       enqueueSnackbar('Xác thực chứng minh thư thành công', { variant: 'success' })
     },
     onError: (error) => {
