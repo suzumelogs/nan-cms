@@ -6,8 +6,23 @@ import { Header } from '@/libs/components/Form/Layout/Header'
 import { Modal } from '@/libs/components/Modal'
 import request from '@/libs/config/axios'
 import { formatDate } from '@/utils/format'
-import { Box, Button, Rating, Stack, Typography } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Button,
+  Paper,
+  Rating,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
+import { format } from 'date-fns'
 import { useParams, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
@@ -122,11 +137,13 @@ const EquipmentDetail = () => {
   const { data: countRental } = useQuery({
     queryKey: ['rental-count-equipment', equipmentsId],
     queryFn: async () => {
-      const response = await request.get(`/rentals/rental-count/equipment/${equipmentsId}`)
+      const response = await request.get(`/rentals/items/equipment/${equipmentsId}`)
 
       return response.data
     },
   })
+
+  console.log(countRental)
 
   return (
     <Stack spacing={4}>
@@ -144,12 +161,7 @@ const EquipmentDetail = () => {
             isPending={isLoading}
           />
           <DetailItem label="Số lượng" value={data?.stock} isPending={isLoading} />
-          <DetailItem
-            label="
-            Số lần cho thuê"
-            value={countRental?.rentalCount}
-            isPending={isLoading}
-          />
+
           <DetailItem
             label="Ngày tạo"
             value={formatDate(data?.createdAt as string)}
@@ -229,6 +241,89 @@ const EquipmentDetail = () => {
 
               <ModalFeedback handleClose={onClose} open={feedbackOpen} feedbackId={feedbackId} />
             </Stack>
+          </Stack>
+
+          <Stack spacing={2}>
+            <Typography variant="h6" fontWeight={600}>
+              Thống kê số lần thuê
+            </Typography>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <strong>Hình đại diện</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Tên người dùng</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Email</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Số điện thoại</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Ngày bắt đầu</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Ngày kết thúc</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Địa chỉ</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Trạng thái</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Tổng tiền</strong>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {countRental &&
+                    countRental?.data?.map((row: any) => (
+                      <TableRow key={row.id}>
+                        {/* Hình đại diện */}
+                        <TableCell>
+                          <Avatar src={row.user.avatar} alt={row.user.name} />
+                        </TableCell>
+                        {/* Tên người dùng */}
+                        <TableCell>
+                          <Typography>{row.user.name}</Typography>
+                        </TableCell>
+                        {/* Email */}
+                        <TableCell>{row.user.email}</TableCell>
+                        {/* Số điện thoại */}
+                        <TableCell>{row.user.phoneNumber}</TableCell>
+                        {/* Ngày bắt đầu */}
+                        <TableCell>{format(new Date(row.startDate), 'dd/MM/yyyy HH:mm')}</TableCell>
+                        {/* Ngày kết thúc */}
+                        <TableCell>{format(new Date(row.endDate), 'dd/MM/yyyy HH:mm')}</TableCell>
+                        {/* Địa chỉ */}
+                        <TableCell>{row.address}</TableCell>
+                        {/* Trạng thái */}
+                        <TableCell>
+                          <Typography
+                            sx={{
+                              color:
+                                row.status === 'pending'
+                                  ? 'orange'
+                                  : row.status === 'completed'
+                                    ? 'green'
+                                    : 'red',
+                            }}
+                          >
+                            {row.status}
+                          </Typography>
+                        </TableCell>
+                        {/* Tổng tiền */}
+                        <TableCell>{row.totalAmount.toLocaleString('vi-VN')} VNĐ</TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Stack>
         </Stack>
       </Box>
