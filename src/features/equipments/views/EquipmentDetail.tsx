@@ -108,6 +108,9 @@ const EquipmentDetail = () => {
         enqueueSnackbar('Xoá thiết bị thành công', { variant: 'success' })
         router.push('/equipments')
       },
+      onError: () => {
+        enqueueSnackbar('Không thể xoá do thiết bị đang được thuê', { variant: 'error' })
+      },
     })
   }
 
