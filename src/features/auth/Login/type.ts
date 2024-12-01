@@ -9,6 +9,7 @@ const UserInfoSchema = z.object({
   id: z.string(),
   name: z.string(),
   email: z.string(),
+  role: z.string(),
 })
 
 export const SigninOutputSchema = z.object({

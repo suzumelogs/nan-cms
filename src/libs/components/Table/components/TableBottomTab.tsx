@@ -28,6 +28,10 @@ export const defaultActionApi = {
     delete: () => {},
     title: '',
   },
+  'usage-records': {
+    delete: () => {},
+    title: '',
+  },
   books: {
     delete: () => {},
     title: '',

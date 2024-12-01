@@ -23,14 +23,10 @@ const RepairRecordFilter = () => {
   return (
     <Stack spacing={3}>
       <Typography color="mono.600" variant="h2">
-        Danh sách lịch sử sửa chữa
+        Danh sách lịch sử sử dụng thiết bị
       </Typography>
 
-      <FilterBar
-        columns={filterColumn}
-        createPath="repair-records/create"
-        buttonSearchUnderButtonCreate
-      />
+      <FilterBar columns={filterColumn} buttonSearchUnderButtonCreate />
     </Stack>
   )
 }

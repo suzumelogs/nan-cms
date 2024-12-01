@@ -11,7 +11,7 @@ import request from '../config/axios'
 export const getListRepairRecords = async (params: RepairRecordListQueryInputType) => {
   const { page, limit, filter } = params
   try {
-    const response = await request.get<RepairRecordListType>('/repair-records/all/pagination', {
+    const response = await request.get<RepairRecordListType>('/usage-records/all/pagination', {
       params: {
         page,
         limit,

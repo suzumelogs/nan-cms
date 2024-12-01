@@ -9,7 +9,7 @@ import LogoutIcon from 'public/assets/svgs/logout.svg'
 import { useState } from 'react'
 import { Modal } from '../../Modal'
 import { ListItemButton } from './ItemSidebar'
-import { menus } from './menu'
+import { getFilteredMenus } from './menu'
 
 export const SIDE_BAR_WIDTH = 240
 
@@ -67,7 +67,7 @@ const Sidebar = () => {
         }}
         component="nav"
       >
-        {menus.map((menu) => (
+        {getFilteredMenus(admin?.role ?? 'admin').map((menu) => (
           <ListItemButton key={menu.title} menu={menu} />
         ))}
       </List>
