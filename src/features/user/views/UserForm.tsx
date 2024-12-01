@@ -22,7 +22,7 @@ const UserForm = () => {
       status: '',
     },
     values: {
-      status: data?.statusIdentityDoc as string,
+      status: data?.statusIdentityDoc ?? '',
     },
     resolver: zodResolver(UserUpdateIndentityDocSchema),
   })
@@ -80,25 +80,27 @@ const UserForm = () => {
 
         <Stack direction="row" spacing={2}>
           <Stack spacing={2} width={{ xs: '100%', lg: '50%' }}>
-            <Select
-              control={control}
-              name="status"
-              label="Trạng thái"
-              labelLeft
-              fullWidth
-              placeholder="Chọn trạng thái"
-              hiddenEmpty
-              options={[
-                {
-                  label: 'Xác thực',
-                  value: 'verified',
-                },
-                {
-                  label: 'Không xác thực',
-                  value: 'rejected',
-                },
-              ]}
-            />
+            {data?.statusIdentityDoc && (
+              <Select
+                control={control}
+                name="status"
+                label="Trạng thái"
+                labelLeft
+                fullWidth
+                placeholder="Chọn trạng thái"
+                hiddenEmpty
+                options={[
+                  {
+                    label: 'Xác thực',
+                    value: 'verified',
+                  },
+                  {
+                    label: 'Không xác thực',
+                    value: 'rejected',
+                  },
+                ]}
+              />
+            )}
           </Stack>
         </Stack>
       </Stack>

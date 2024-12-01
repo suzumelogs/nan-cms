@@ -45,6 +45,9 @@ const EquipmentPackageDetail = () => {
         enqueueSnackbar('Xoá thành công', { variant: 'success' })
         router.push('/package')
       },
+      onError: () => {
+        enqueueSnackbar('Không thể xoá do gói đang được thuê', { variant: 'error' })
+      },
     })
   }
 
