@@ -55,7 +55,7 @@ const MaintenanceDetail = () => {
           />
           <DetailItem
             label="Trạng thái"
-            value={data?.status}
+            value={data?.status === 'pending' ? 'Đang chờ' : 'Hoàn thành'}
             isPending={isLoading}
           />
           <DetailItem

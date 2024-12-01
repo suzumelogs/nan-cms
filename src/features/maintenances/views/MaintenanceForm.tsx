@@ -31,6 +31,7 @@ const MaintenanceForm = () => {
       description: '',
       maintenanceCost: 0,
       equipmentId: '',
+      status: 'pending',
     },
     resolver: zodResolver(MaintenanceCreateInputSchema),
   })
@@ -42,6 +43,7 @@ const MaintenanceForm = () => {
       setValue('description', description as string)
       setValue('maintenanceCost', maintenanceCost as number)
       setValue('equipmentId', equipmentId as string)
+      setValue('status', maintenanceDetail?.status ?? 'pending')
     }
   }, [setValue, maintenanceDetail])
 
@@ -119,6 +121,27 @@ const MaintenanceForm = () => {
               type="number"
               fullWidth
             />
+            {maintenanceDetail?.status && (
+              <Select
+                control={control}
+                name="status"
+                label="Trạng thái"
+                labelLeft
+                placeholder="Trạng thái"
+                fullWidth
+                hiddenEmpty
+                options={[
+                  {
+                    label: 'Đang chờ',
+                    value: 'pending',
+                  },
+                  {
+                    label: 'Hoàn thành',
+                    value: 'completed',
+                  },
+                ]}
+              />
+            )}
             <Select
               control={control}
               name="equipmentId"
