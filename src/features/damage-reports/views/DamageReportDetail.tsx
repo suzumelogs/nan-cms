@@ -62,6 +62,7 @@ const DamageReportDetail = () => {
       onSubmit={handleSubmit(onSubmit)}
       title="Chi tiết"
       isLoading={isLoading}
+      closeFormPath='/damage-reports'
     >
       <Box>
         <Stack spacing={2}>

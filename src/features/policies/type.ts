@@ -50,12 +50,15 @@ export const PolicyCreateInputSchema = z.object({
     .min(1, { message: 'Mô tả chính sách là bắt buộc' })
     .max(1000, { message: 'Mô tả không được dài quá 1000 ký tự' }),
   depositRate: z
-    .number()
-    .min(0, { message: 'Tỷ lệ đặt cọc phải lớn hơn hoặc bằng 0' })
-    .max(100, { message: 'Tỷ lệ đặt cọc không thể lớn hơn 100' }),
+    .union([z.string(), z.number()])
+    .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
+    .refine((val) => !isNaN(val) && val > 0, { message: 'Phải là số dương' })
+    .optional(),
   damageProcessingFee: z
-    .number()
-    .min(0, { message: 'Phí xử lý hỏng hóc phải lớn hơn hoặc bằng 0' }),
+    .union([z.string(), z.number()])
+    .transform((val) => (typeof val === 'string' ? parseFloat(val) : val))
+    .refine((val) => !isNaN(val) && val > 0, { message: 'Phải là số dương' })
+    .optional(),
 })
 
 export const PolicyUpdateInputSchema = PolicyCreateInputSchema.extend({

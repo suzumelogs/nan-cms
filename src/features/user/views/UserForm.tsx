@@ -57,6 +57,7 @@ const UserForm = () => {
       title="
       Chi tiết thông tin người dùng"
       isLoading={isLoading}
+      closeFormPath='/users'
     >
       <Stack spacing={2}>
         <DetailItem label="ID" value={data?.id} isPending={isLoading} />
