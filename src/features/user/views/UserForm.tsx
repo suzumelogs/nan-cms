@@ -80,7 +80,6 @@ const UserForm = () => {
 
         <Stack direction="row" spacing={2}>
           <Stack spacing={2} width={{ xs: '100%', lg: '50%' }}>
-            {data?.statusIdentityDoc && (
               <Select
                 control={control}
                 name="status"
@@ -100,7 +99,6 @@ const UserForm = () => {
                   },
                 ]}
               />
-            )}
           </Stack>
         </Stack>
       </Stack>
